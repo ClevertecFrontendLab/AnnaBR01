@@ -1,6 +1,9 @@
-import books from '../../books.json';
+import { v4 as uuidv4 } from 'uuid';
+
+import { useAppSelector } from '../../store/hooks';
+import { getBookDetails } from '../../store/selectors/book-details-selector';
 import { SecondarySmallTitle } from '../../ui/typography';
-import { NoRating, ReviewsList, Separator } from '..';
+import { NoRating, ReviewsList, Separator, Stars } from '..';
 
 import {
   Description,
@@ -18,7 +21,8 @@ import {
 } from './styles';
 
 export const BookDescription = () => {
-  const { rating, publishing, year, pages, format, binding, weight, ISBN, manufacturer, category } = books.business[3];
+  const { book } = useAppSelector(getBookDetails);
+  const { rating, publish, issueYear, pages, cover, format, categories, weight, ISBN, producer } = book;
 
   return (
     <StyledBookDescription>
@@ -27,14 +31,14 @@ export const BookDescription = () => {
 
         <Separator />
 
-        {rating === '' ? (
+        {rating === null ? (
           <NoRatingRow>
             <NoRating />
             <RatingText>еще нет оценок</RatingText>
           </NoRatingRow>
         ) : (
           <RatingRow>
-            {/* <Stars rating={rating} /> */}
+            <Stars rating={rating} />
             <NumberRating>{rating}</NumberRating>
           </RatingRow>
         )}
@@ -48,49 +52,57 @@ export const BookDescription = () => {
           <DescriptionContainer>
             <DescriptionRow>
               <InfoTitle>Издательство</InfoTitle>
-              <Info>{publishing}</Info>
+              {publish ? <Info>{publish}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Год издания</InfoTitle>
-              <Info>{year}</Info>
+              {issueYear ? <Info>{issueYear}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Страниц</InfoTitle>
-              <Info>{pages}</Info>
+              {pages ? <Info>{pages}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Переплет</InfoTitle>
-              <Info>{binding}</Info>
+              {cover ? <Info>{cover}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Формат</InfoTitle>
-              <Info>{format}</Info>
+              {format ? <Info>{format}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
           </DescriptionContainer>
 
           <DescriptionContainer>
             <DescriptionRow>
               <InfoTitle>Жанр</InfoTitle>
-              <Info>{category}</Info>
+
+              {categories !== null &&
+                (categories.length > 1 ? (
+                  categories.map((categoryName) => <Info key={uuidv4()}>{categoryName}, </Info>)
+                ) : (
+                  <Info>{categories[0]}</Info>
+                ))}
+
+              {categories === null && <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Вес</InfoTitle>
-              <Info>{weight}</Info>
+              {weight ? <Info>{weight}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>ISBN</InfoTitle>
-              <Info>{ISBN}</Info>
+              {ISBN ? <Info>{ISBN}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
 
             <DescriptionRow>
               <InfoTitle>Изготовитель</InfoTitle>
-              <Info>{manufacturer}</Info>
+              {producer ? <Info>{producer}</Info> : <Info>нет сведений</Info>}
             </DescriptionRow>
           </DescriptionContainer>
         </WrapperDescription>

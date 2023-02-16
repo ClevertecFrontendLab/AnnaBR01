@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-import { IBook, ICategory } from '../types/types';
+import { IBook, IBookDetails, ICategory } from '../types/types';
 
 enum Endpoint {
   BOOKS = 'books',
   CATEGORIES = 'categories',
+  BOOK = 'books/',
 }
 
 class CleverlandAPI {
@@ -24,11 +25,11 @@ class CleverlandAPI {
     return data;
   }
 
-  // public async getDetailsByIsbn13(isbn13: string) {
-  //   const { data } = await this.API.get<IBookDetails>(`${Endpoint.BOOK}${isbn13}`);
+  public async getDetailsById(id: string) {
+    const { data } = await this.API.get<IBookDetails>(`${Endpoint.BOOK}${id}`);
 
-  //   return data;
-  // }
+    return data;
+  }
 }
 
 export const cleverlandAPI = new CleverlandAPI();

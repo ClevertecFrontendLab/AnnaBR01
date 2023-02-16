@@ -24,6 +24,7 @@ const StyledError = styled(ContainerFlexBeetween)`
 const Container = styled(ContainerFlexBeetween)`
   max-width: 1110px;
   width: 1110px;
+  grid-gap: 15px;
   margin: 0 auto;
   padding: 24px 32px;
   background: #feebea;
@@ -41,6 +42,7 @@ const Container = styled(ContainerFlexBeetween)`
 `;
 
 const Text = styled.p`
+  text-align: center;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;

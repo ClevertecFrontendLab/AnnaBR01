@@ -10,7 +10,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 interface IProps {
-  image: string[];
+  image: [{ url: string }];
   title: string;
 }
 
@@ -19,7 +19,7 @@ export const SliderTablet = ({ image, title }: IProps) => (
     <StyledSwiper modules={[Navigation, Pagination]} pagination={{ clickable: true }} data-test-id='slide-big'>
       {image.map((picture) => (
         <SwiperSlide key={uuidv4()}>
-          <Image src={picture} alt={title} />
+          <Image src={`https://strapi.cleverland.by${picture.url}`} alt={title} />
         </SwiperSlide>
       ))}
     </StyledSwiper>

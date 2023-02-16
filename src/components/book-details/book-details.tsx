@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import { NoImageIcon } from '../../assets';
-import books from '../../books.json';
 import { useWindowSize } from '../../hooks/use-window-size';
+import { useAppSelector } from '../../store/hooks';
+import { getBookDetails } from '../../store/selectors/book-details-selector';
 import { Breackpoint } from '../../ui/media';
 import { Title } from '../../ui/typography';
 import { ButtonOccupied, ButtonOccupiedUntil, PrimaryButton, SliderDesktop, SliderTablet } from '..';
@@ -24,29 +25,29 @@ import {
 
 export const BookDetails = () => {
   const { width = 0 } = useWindowSize();
-  const { image, title, author, year, isBooked, bookedTill } = books.business[2]; // TODO: change book rendering according to the request
-  const { id } = useParams();
-
-  // TODO: change rendering according length of array
+  const { book } = useAppSelector(getBookDetails);
+  const { images, title, authors, issueYear, booking, delivery } = book;
 
   return (
     <React.Fragment>
       <StyledBookDetails>
         <WrapperImage>
-          {id === '63ca7627f79ebdac69926ffc' && (
+          {images === null && (
             <NoImage>
               <NoImageIcon />
             </NoImage>
           )}
 
-          {id === '63ca7627549c20ea76acb8fc' && <Image src={image[0]} alt={title} />}
+          {images !== null && images.length === 1 && (
+            <Image src={`https://strapi.cleverland.by${images[0].url}`} alt={title} />
+          )}
 
-          {id !== '63ca7627549c20ea76acb8fc' &&
-            id !== '63ca7627f79ebdac69926ffc' &&
+          {images !== null &&
+            images.length > 1 &&
             (width >= Breackpoint.MD ? (
-              <SliderDesktop image={image} title={title} />
+              <SliderDesktop image={images} title={title} />
             ) : (
-              <SliderTablet image={image} title={title} />
+              <SliderTablet image={images} title={title} />
             ))}
         </WrapperImage>
 
@@ -54,24 +55,26 @@ export const BookDetails = () => {
           <Title>{title}</Title>
 
           <Author>
-            <WrapperText>{author}, </WrapperText>
-            <WrapperText>{year}</WrapperText>
+            {authors !== null && authors.map((author) => <WrapperText key={uuidv4()}>{author}, </WrapperText>)}
+            {issueYear && <WrapperText>{issueYear}</WrapperText>}
           </Author>
 
-          {isBooked === true && bookedTill === '' && (
-            <ButtonOccupied large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
-              Забронировано
-            </ButtonOccupied>
-          )}
-          {isBooked === true && bookedTill !== '' && (
-            <ButtonOccupiedUntil large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
-              Занята до 25.02
-            </ButtonOccupiedUntil>
-          )}
-          {isBooked === false && (
+          {booking === null ? (
             <PrimaryButton large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
               Забронировать
             </PrimaryButton>
+          ) : booking.order && delivery === null ? (
+            <ButtonOccupied large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
+              Забронировано
+            </ButtonOccupied>
+          ) : (
+            delivery &&
+            booking.order &&
+            delivery.handed && (
+              <ButtonOccupiedUntil large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
+                Занята
+              </ButtonOccupiedUntil>
+            )
           )}
 
           {width > Breackpoint.MD && (

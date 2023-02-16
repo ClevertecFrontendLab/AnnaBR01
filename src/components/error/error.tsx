@@ -1,14 +1,15 @@
 import { ReactNode } from 'react';
+
 import { CloseErrorIcon, WarningIcon } from '../../assets';
 
-import { StyledError, Text, Container } from './styles';
+import { Container, StyledError, Text } from './styles';
 
 interface IProps {
   children: ReactNode;
 }
 
 export const Error = ({ children }: IProps) => (
-  <StyledError>
+  <StyledError data-test-id='error'>
     <Container>
       <WarningIcon />
       <Text> {children}</Text>

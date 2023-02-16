@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { ChevronDownIcon, ChevronUpIcon } from '../../assets';
 import reviewerAvatarIcon from '../../assets/images/reviewer-avatar.png';
 import { useToggle } from '../../hooks/use-toggle';
+import { useAppSelector } from '../../store/hooks';
+import { getBookDetails } from '../../store/selectors/book-details-selector';
 import { SmallTitle } from '../../ui/typography';
 import { PrimaryButton } from '../primary-button/primary-button';
 import { Stars } from '../stars/stars';
@@ -23,43 +25,19 @@ import {
   WrapperReviews,
 } from './styles';
 
-export interface IReview {
-  reviewerName: string;
-  reviewerAvatar: string;
-  review: string;
-  stars: number;
-  date: string;
-}
-
-const dataReviews: IReview[] | [] = [
-  {
-    reviewerName: 'Александр Пушкин',
-    reviewerAvatar: '',
-    review:
-      'Учитывая ключевые сценарии поведения, курс на социально-ориентированный национальный проект не оставляет шанса для анализа существующих паттернов поведения. Для современного мира внедрение современных методик предоставляет широкие возможности для позиций, занимаемых участниками в отношении поставленных задач. Как уже неоднократно упомянуто, сделанные на базе интернет-аналитики выводы будут в равной степени предоставлены сами себе. Вот вам яркий пример современных тенденций — глубокий уровень погружения создаёт предпосылки для своевременного выполнения сверхзадачи. И нет сомнений, что акционеры крупнейших компаний, инициированные исключительно синтетически, превращены в посмешище, хотя само их существование приносит несомненную пользу обществу.',
-    stars: 3,
-    date: '10 марта 1856',
-  },
-  {
-    reviewerName: 'Лев Толстой',
-    reviewerAvatar: '',
-    review: '',
-    stars: 5,
-    date: '13 февраля 1921',
-  },
-  {
-    reviewerName: 'Мария Петрова',
-    reviewerAvatar: '',
-    review: '',
-    stars: 5,
-    date: '15 апреля 2023',
-  },
-];
-
 export const ReviewsList = () => {
+  const { book } = useAppSelector(getBookDetails);
+  const { comments } = book;
+
   const [isOpen, toggleIsOpen] = useToggle(false);
   const toggleRewievs = () => {
     toggleIsOpen();
+  };
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   };
 
   return (
@@ -67,30 +45,42 @@ export const ReviewsList = () => {
       <TitleBox $open={isOpen}>
         <WrapperReviews>
           <SmallTitle>
-            Отзывы<ReviewsAmount>{dataReviews.length}</ReviewsAmount>
+            Отзывы{comments ? <ReviewsAmount>{comments.length}</ReviewsAmount> : <ReviewsAmount>0</ReviewsAmount>}
           </SmallTitle>
-          <ButtonArrow type='button' onClick={toggleRewievs} data-test-id='button-hide-reviews'>
-            {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </ButtonArrow>
+          {comments && (
+            <ButtonArrow type='button' onClick={toggleRewievs} data-test-id='button-hide-reviews'>
+              {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            </ButtonArrow>
+          )}
         </WrapperReviews>
       </TitleBox>
 
-      {!!dataReviews.length && isOpen && (
+      {comments && isOpen && (
         <React.Fragment>
           <Separator />
 
           <Content>
-            {dataReviews.map(({ reviewerName, review, stars, date }) => (
+            {comments.map(({ user, text, rating, createdAt }) => (
               <Review key={uuidv4()}>
                 <Info>
-                  <img src={reviewerAvatarIcon} alt='avatar' />
+                  {user.avatarUrl ? (
+                    <img src={`https://strapi.cleverland.by${user.avatarUrl}`} alt='avatar' />
+                  ) : (
+                    <img src={reviewerAvatarIcon} alt='avatar' />
+                  )}
                   <Box>
-                    <InfoText>{reviewerName}</InfoText>
-                    <InfoText>{date}</InfoText>
+                    <InfoText>{`${user.firstName}, ${user.lastName}`}</InfoText>
+                    <InfoText>
+                      {new Date(createdAt).toLocaleDateString('ru-RU', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </InfoText>
                   </Box>
                 </Info>
-                <Stars rating={stars} />
-                <Text>{review}</Text>
+                <Stars rating={rating} />
+                <Text>{text}</Text>
               </Review>
             ))}
           </Content>

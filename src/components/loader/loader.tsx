@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export const Loader = ({ size = 68 }: IProps) => (
-  <StaledLoader>
+  <StaledLoader data-test-id='loader'>
     <Lottie
       animationData={loader}
       loop={true}

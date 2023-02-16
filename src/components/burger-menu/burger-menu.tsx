@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +7,6 @@ import { useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
 import { CustomAsidelink } from '../custom-aside-link/custom-aside-link';
-import { Error } from '..';
 
 import {
   Amount,
@@ -30,7 +28,7 @@ interface IProps {
 }
 
 export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, menuOpen, isOpen }: IProps) => {
-  const { errorCategories, categories } = useAppSelector(getCategories);
+  const { categories } = useAppSelector(getCategories);
   const { books } = useAppSelector(getBooks);
   const currentPageHome = useMatch(ROUTE.HOME);
   const currentPageCategories = useMatch(ROUTE.CATEGORY);
@@ -42,62 +40,54 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
   };
 
   return (
-    <React.Fragment>
-      {errorCategories && <Error>{errorCategories}</Error>}
-      {categories.length > 0 && books.length > 0 && (
-        <StyledBurgerMenu $menuOpen={menuOpen}>
-          <Wrapper>
-            <div>
-              <CustomAsidelink to={ROUTE.HOME} type='primary' onClick={handleCategories} open={isOpen}>
-                <WrapperChevron data-test-id='burger-showcase'>
-                  <p>Витрина книг</p>
-                  <ChevronButton $iscurrentPageHome={!!currentPageHome || !!currentPageCategories} type='button'>
-                    {isOpen ? <ChevronTopIcon /> : <ChevronBottomIcon />}
-                  </ChevronButton>
-                </WrapperChevron>
+    <StyledBurgerMenu $menuOpen={menuOpen}>
+      <Wrapper>
+        <div>
+          <CustomAsidelink to={ROUTE.HOME} type='primary' onClick={handleCategories} open={isOpen}>
+            <WrapperChevron data-test-id='burger-showcase'>
+              <p>Витрина книг</p>
+              <ChevronButton $iscurrentPageHome={!!currentPageHome || !!currentPageCategories} type='button'>
+                {isOpen ? <ChevronTopIcon /> : <ChevronBottomIcon />}
+              </ChevronButton>
+            </WrapperChevron>
+          </CustomAsidelink>
+
+          {categories.length > 0 && books.length > 0 && (
+            <CategoryBox $open={isOpen}>
+              <CustomAsidelink to={ROUTE.HOME} type='secondary' onClick={toggleMenuMode}>
+                <Text $open={isOpen} ata-test-id='burger-books'>
+                  Все книги
+                </Text>
               </CustomAsidelink>
-
-              <CategoryBox $open={isOpen}>
-                <CustomAsidelink to={ROUTE.HOME} type='secondary' onClick={toggleMenuMode}>
-                  <Text $open={isOpen} ata-test-id='burger-books'>
-                    Все книги
-                  </Text>
+              {categories.map(({ name, path }) => (
+                <CustomAsidelink to={`${ROUTE.BOOKS}/${path}`} type='tertiary' onClick={toggleMenuMode} key={uuidv4()}>
+                  <p>
+                    {name}
+                    {/* <Amount>{amount}</Amount> */}
+                  </p>
                 </CustomAsidelink>
-                {categories.map(({ name, path }) => (
-                  <CustomAsidelink
-                    to={`${ROUTE.BOOKS}/${path}`}
-                    type='tertiary'
-                    onClick={toggleMenuMode}
-                    key={uuidv4()}
-                  >
-                    <p>
-                      {name}
-                      {/* <Amount>{amount}</Amount> */}
-                    </p>
-                  </CustomAsidelink>
-                ))}
-              </CategoryBox>
-            </div>
-            <CustomAsidelink to={ROUTE.OFFER} type='primary' onClick={closeBurgerMenu}>
-              <p data-test-id='burger-terms'>Правила пользования</p>
-            </CustomAsidelink>
-            <CustomAsidelink to={ROUTE.RULES} type='primary' onClick={closeBurgerMenu}>
-              <p data-test-id='burger-contract'>Договор оферты</p>
-            </CustomAsidelink>
-          </Wrapper>
+              ))}
+            </CategoryBox>
+          )}
+        </div>
+        <CustomAsidelink to={ROUTE.OFFER} type='primary' onClick={closeBurgerMenu}>
+          <p data-test-id='burger-terms'>Правила пользования</p>
+        </CustomAsidelink>
+        <CustomAsidelink to={ROUTE.RULES} type='primary' onClick={closeBurgerMenu}>
+          <p data-test-id='burger-contract'>Договор оферты</p>
+        </CustomAsidelink>
+      </Wrapper>
 
-          <Separator />
+      <Separator />
 
-          <Wrapper>
-            <CustomAsidelink to='account' type='primary' onClick={closeBurgerMenu}>
-              Профиль
-            </CustomAsidelink>
-            <CustomAsidelink to='example' type='primary' onClick={closeBurgerMenu}>
-              Выход
-            </CustomAsidelink>
-          </Wrapper>
-        </StyledBurgerMenu>
-      )}
-    </React.Fragment>
+      <Wrapper>
+        <CustomAsidelink to='account' type='primary' onClick={closeBurgerMenu}>
+          Профиль
+        </CustomAsidelink>
+        <CustomAsidelink to='example' type='primary' onClick={closeBurgerMenu}>
+          Выход
+        </CustomAsidelink>
+      </Wrapper>
+    </StyledBurgerMenu>
   );
 };

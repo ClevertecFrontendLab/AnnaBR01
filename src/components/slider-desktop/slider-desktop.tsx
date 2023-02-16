@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 interface IProps {
-  image: string[];
+  image: [{ url: string }];
   title: string;
 }
 
@@ -33,7 +33,7 @@ export const SliderDesktop = ({ image, title }: IProps) => {
       >
         {image.map((picture) => (
           <SwiperSlide key={uuidv4()}>
-            <Image src={picture} alt={title} />
+            <Image src={`https://strapi.cleverland.by${picture.url}`} alt={title} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -49,7 +49,7 @@ export const SliderDesktop = ({ image, title }: IProps) => {
       >
         {image.map((picture) => (
           <SwiperSlide data-test-id='slide-mini' key={uuidv4()}>
-            <ImagePreview src={picture} alt={title} />
+            <ImagePreview src={`https://strapi.cleverland.by${picture.url}`} alt={title} />
           </SwiperSlide>
         ))}
       </SwiperMini>
