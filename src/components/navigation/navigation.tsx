@@ -1,5 +1,4 @@
 import { CloseSearchIcon, ColumnIcon, FilterIcon, SearchIcon, SquareIcon } from '../../assets';
-import { useViewContext } from '../../context/button-view-context/button-view-context';
 import { useToggle } from '../../hooks/use-toggle';
 import { useWindowSize } from '../../hooks/use-window-size';
 import { Breackpoint } from '../../ui/media';
@@ -20,23 +19,26 @@ import {
   WrapperSorting,
 } from './styles';
 
-export const Navigation = () => {
+interface IProps {
+  isColumn: boolean;
+  isSquare: boolean;
+  handleColumnView: () => void;
+  handleSquareView: () => void;
+}
+
+export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareView }: IProps) => {
   const { width = 0 } = useWindowSize();
-  const { view, setView } = useViewContext();
   const [isSearchOpen, toggleIsSearchOpen] = useToggle(false);
-
-  const handleSquareView = () => {
-    setView(view);
-  };
-
-  const handleColumnView = () => {
-    setView(view);
-  };
 
   const handleSearchView = () => {
     if (width < Breackpoint.SM) {
       toggleIsSearchOpen();
     }
+  };
+
+  const handleView = () => {
+    handleColumnView();
+    handleSquareView();
   };
 
   return (
@@ -75,21 +77,11 @@ export const Navigation = () => {
       </WrapperInputs>
 
       <WrapperSorting $isSearchOpen={isSearchOpen}>
-        <ButtonSquare
-          onClick={handleSquareView}
-          $isSquare={view.isSquare}
-          type='button'
-          data-test-id='button-menu-view-window'
-        >
-          <SquareIcon fill={view.isSquare ? '#FFFFFF' : '#A7A7A7'} />
+        <ButtonSquare onClick={handleView} $isSquare={isSquare} type='button' data-test-id='button-menu-view-window'>
+          <SquareIcon fill={isSquare ? '#FFFFFF' : '#A7A7A7'} />
         </ButtonSquare>
-        <ButtonColumn
-          onClick={handleColumnView}
-          $isColumn={view.isColumn}
-          type='button'
-          data-test-id='button-menu-view-list'
-        >
-          <ColumnIcon fill={view.isColumn ? '#FFFFFF' : '#A7A7A7'} />
+        <ButtonColumn onClick={handleView} $isColumn={isColumn} type='button' data-test-id='button-menu-view-list'>
+          <ColumnIcon fill={isColumn ? '#FFFFFF' : '#A7A7A7'} />
         </ButtonColumn>
       </WrapperSorting>
     </StyledNavigation>

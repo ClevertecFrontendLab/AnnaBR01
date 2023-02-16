@@ -3,22 +3,18 @@ import { useMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ChevronBottomIcon, ChevronTopIcon } from '../../assets';
-import { useWindowSize } from '../../hooks/use-window-size';
 import { ROUTE } from '../../routes/routes';
 import { useAppSelector } from '../../store/hooks';
+import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
-import { Breackpoint } from '../../ui/media';
 import { CustomAsidelink } from '../custom-aside-link/custom-aside-link';
-import { Loader } from '../loader/loader';
 import { Error } from '..';
 
 import { Amount, CategoryBox, ChevronButton, Text, Wrapper, WrapperChevron } from './styles';
-import { getBooks } from '../../store/selectors/books-selectors';
 
 export const Menu = () => {
-  const { width = 0 } = useWindowSize();
-  const { isLoadingCategories, errorCategories, categories } = useAppSelector(getCategories);
-  const { isLoadingBooks, errorBooks, books } = useAppSelector(getBooks);
+  const { errorCategories, categories } = useAppSelector(getCategories);
+  const { books } = useAppSelector(getBooks);
   const [isOpen, setIsOpen] = useState(true);
   const currentPageHome = useMatch(ROUTE.HOME);
   const currentPageCategory = useMatch(ROUTE.CATEGORY);

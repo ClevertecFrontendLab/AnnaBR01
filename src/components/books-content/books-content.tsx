@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useViewContext } from '../../context/button-view-context/button-view-context';
 import { useWindowSize } from '../../hooks/use-window-size';
 import { ROUTE } from '../../routes/routes';
 import { useAppSelector } from '../../store/hooks';
@@ -13,13 +12,16 @@ import { Error, HorizontalBookCard, VerticalBookCard } from '..';
 
 import { StyledHorizontalBooksContent, StyledVerticalBooksContent } from './styles';
 
-export const BooksContent = () => {
+interface IProps {
+  isColumn: boolean;
+  isSquare: boolean;
+}
+
+export const BooksContent = ({ isColumn, isSquare }: IProps) => {
   const { width = 0 } = useWindowSize();
-  const { view } = useViewContext();
+
   const { isLoadingBooks, errorBooks, books } = useAppSelector(getBooks);
   const { isLoadingCategories, errorCategories, categories } = useAppSelector(getCategories);
-  const { isSquare } = view;
-  const { isColumn } = view;
 
   return (
     <React.Fragment>
