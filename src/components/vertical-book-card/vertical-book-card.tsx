@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { NoImageIcon } from '../../assets';
 import { IBook } from '../../types/types';
 import { ButtonOccupied, ButtonOccupiedUntil, PrimaryButton, Stars } from '..';
@@ -19,17 +21,17 @@ interface IProps {
 }
 
 export const VerticalBookCard = ({ book }: IProps) => {
-  const { image, year, author, title, rating, isBooked, bookedTill } = book;
+  const { image, issueYear, authors, title, rating, booking, delivery } = book;
 
   return (
     <StyledVerticalBookCard data-test-id='card'>
       <WrapperImage>
-        {image.length === 0 ? (
+        {image === null ? (
           <NoImage>
             <NoImageIcon />
           </NoImage>
         ) : (
-          <Image src={image[0]} alt={title} />
+          <Image src={`https://strapi.cleverland.by${image.url}`} alt={title} />
         )}
       </WrapperImage>
 
@@ -41,13 +43,14 @@ export const VerticalBookCard = ({ book }: IProps) => {
 
       <SubTitle>
         <WrapperText>
-          <Text>{author}, </Text>
-          <Text>{year}</Text>
+          {authors!==null && authors.map((author)=><Text key={uuidv4()} >{author}, </Text>)}
+         {issueYear&&<Text>{issueYear}</Text>} 
         </WrapperText>
-      </SubTitle>
-      {isBooked === true && bookedTill === '' && <ButtonOccupied>Забронировано</ButtonOccupied>}
-      {isBooked === true && bookedTill !== '' && <ButtonOccupiedUntil>Занята до 25.02</ButtonOccupiedUntil>}
-      {isBooked === false && <PrimaryButton>Забронировать</PrimaryButton>}
+      </SubTitle> 
+      
+      {booking ===null ? <PrimaryButton>Забронировать</PrimaryButton>: (
+      booking.order  && delivery===null ? <ButtonOccupied>Забронировано</ButtonOccupied>:
+      delivery&&booking.order&& delivery.handed && <ButtonOccupiedUntil>Занята</ButtonOccupiedUntil>) }
     </StyledVerticalBookCard>
-  );
+  ); // TODO: add "Занята до"
 };

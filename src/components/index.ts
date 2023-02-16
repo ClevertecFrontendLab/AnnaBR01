@@ -6,6 +6,7 @@ import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { BurgerMenu } from './burger-menu/burger-menu';
 import { ButtonOccupied } from './button-occupied/button-occupied';
 import { ButtonOccupiedUntil } from './button-occupied-until/button-occupied-until';
+import { Error } from './error/error';
 import { Footer } from './footer/footer';
 import { Header } from './header/header';
 import { HorizontalBookCard } from './horizontal-book-card/horizontal-book-card';
@@ -46,4 +47,5 @@ export {
   BurgerMenu,
   SliderDesktop,
   SliderTablet,
+  Error,
 };

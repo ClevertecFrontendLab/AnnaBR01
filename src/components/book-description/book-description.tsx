@@ -1,6 +1,6 @@
 import books from '../../books.json';
 import { SecondarySmallTitle } from '../../ui/typography';
-import { NoRating, ReviewsList, Separator, Stars } from '..';
+import { NoRating, ReviewsList, Separator } from '..';
 
 import {
   Description,
@@ -34,7 +34,7 @@ export const BookDescription = () => {
           </NoRatingRow>
         ) : (
           <RatingRow>
-            <Stars rating={rating} />
+            {/* <Stars rating={rating} /> */}
             <NumberRating>{rating}</NumberRating>
           </RatingRow>
         )}

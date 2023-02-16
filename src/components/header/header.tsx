@@ -11,7 +11,6 @@ import { Box, BurgerBox, Container, LogoContainer, StyledHeader, Text, Title, Us
 
 export const Header = () => {
   const [isMenuOpen, toggleMenu] = useState(false);
-
   const [isOpen, setIsOpen] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
 

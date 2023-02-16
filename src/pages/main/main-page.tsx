@@ -1,5 +1,15 @@
-import { BooksList } from '../../components';
+import { useEffect } from 'react';
 
-export const MainPage = () => (
-   <BooksList />
-);
+import { BooksList } from '../../components';
+import { fetchBooks } from '../../store/features/books-slice';
+import { useAppDispatch } from '../../store/hooks';
+
+export const MainPage = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
+
+  return <BooksList />;
+};

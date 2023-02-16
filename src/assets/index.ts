@@ -3,6 +3,7 @@ import { ReactComponent as ChevronBottomIcon } from './icons/chevron-bottom-icon
 import { ReactComponent as ChevronDownIcon } from './icons/chevron-down-icon.svg';
 import { ReactComponent as ChevronTopIcon } from './icons/chevron-top-icon.svg';
 import { ReactComponent as ChevronUpIcon } from './icons/chevron-up-icon.svg';
+import { ReactComponent as CloseErrorIcon } from './icons/close-error-icon.svg';
 import { ReactComponent as CloseSearchIcon } from './icons/close-search-icon.svg';
 import { ReactComponent as ColumnIcon } from './icons/column-icon.svg';
 import { ReactComponent as CrossMarkIcon } from './icons/cross-mark-icon.svg';
@@ -18,6 +19,7 @@ import { ReactComponent as SearchIcon } from './icons/search-icon.svg';
 import { ReactComponent as SquareIcon } from './icons/square-icon.svg';
 import { ReactComponent as StarIcon } from './icons/star-icon.svg';
 import { ReactComponent as VKIcon } from './icons/vk-icon.svg';
+import { ReactComponent as WarningIcon } from './icons/warning-icon.svg';
 
 export {
   LogoIcon,
@@ -40,4 +42,6 @@ export {
   ChevronDownIcon,
   ChevronUpIcon,
   CloseSearchIcon,
+  WarningIcon,
+  CloseErrorIcon,
 };

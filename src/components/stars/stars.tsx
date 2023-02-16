@@ -5,21 +5,23 @@ import { PaintedStarIcon, StarIcon } from '../../assets';
 import { StyledStars, Text } from './styles';
 
 interface IProps {
-  rating: number | string;
+  rating: number | null;
   gap?: number;
 }
 
 export const Stars = ({ rating, gap = 12 }: IProps) =>
-  rating === '' ? (
+
+  (rating === null ? (
     <Text>еще нет оценок</Text>
-  ) : (
+  ) : ( 
     <StyledStars gap={gap}>
-      {[...Array(rating)].map(() => (
+      {[...Array(Math.round(rating))].map(() => (
         <PaintedStarIcon key={uuidv4()} />
       ))}
 
-      {[...Array(5 - +rating)].map(() => (
+      {[...Array(5 - +Math.round(rating))].map(() => (
         <StarIcon key={uuidv4()} />
       ))}
     </StyledStars>
-  );
+  )
+      )

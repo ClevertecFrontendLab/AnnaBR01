@@ -5,7 +5,7 @@ import { BookDescription, BookDetails, Breadcrumbs } from '../../components';
 export const BookPage = () => (
   <React.Fragment>
     <Breadcrumbs />
-    <BookDetails />
-    <BookDescription />
+    {/* <BookDetails />
+    <BookDescription /> */}
   </React.Fragment>
 );
