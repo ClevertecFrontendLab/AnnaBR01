@@ -45,7 +45,7 @@ export const Menu = () => {
               </Text>
             </CustomAsidelink>
             {categories.map(({ name, path }) => (
-              <CustomAsidelink to={`${ROUTE.BOOKS}/${path}`} type='tertiary' key={uuidv4()}>
+              <CustomAsidelink to={`${ROUTE.BOOKS}/${path}`} type='tertiary' key={uuidv4()} state={name}>
                 <p>
                   {name}
                   {/* <Amount>{amount}</Amount> */}

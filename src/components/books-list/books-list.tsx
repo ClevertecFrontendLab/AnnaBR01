@@ -35,14 +35,10 @@ export const BooksList = () => {
   return (
     <StyledBooklist>
       {(isLoadingCategories || isLoadingBooks) &&
-        (width < Breackpoint.SM ? <Loader size={22} /> : width < Breackpoint.MD ? <Loader size={44} /> : <Loader />)}
+        (width < Breackpoint.SM ? <Loader size={42} /> : width < Breackpoint.MD ? <Loader size={64} /> : <Loader />)}
 
-      {!isLoadingCategories && !isLoadingBooks && errorBooks && <Error>{errorBooks}</Error>}
-
-      {!isLoadingCategories && !isLoadingBooks && errorCategories && <Error>{errorCategories}</Error>}
-
-      {!isLoadingCategories && !isLoadingBooks && errorBooks && errorCategories && (
-        <Error>{`${errorBooks}, ${errorCategories}`}</Error>
+      {!isLoadingCategories && !isLoadingBooks && (errorBooks || errorCategories) && (
+        <Error>Что-то пошло не так. Обновите страницу через некоторое время.</Error>
       )}
 
       {categories.length > 0 && books.length > 0 && !errorBooks && !errorCategories && (

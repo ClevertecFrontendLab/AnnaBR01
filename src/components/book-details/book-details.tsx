@@ -60,18 +60,18 @@ export const BookDetails = () => {
           </Author>
 
           {booking === null ? (
-            <PrimaryButton large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
+            <PrimaryButton large={350} middle={306} small={288} padding={14} fontSize={16} isBig={false}>
               Забронировать
             </PrimaryButton>
           ) : booking.order && delivery === null ? (
-            <ButtonOccupied large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
+            <ButtonOccupied large={350} middle={306} small={288} padding={14} fontSize={16} isBig={false}>
               Забронировано
             </ButtonOccupied>
           ) : (
             delivery &&
             booking.order &&
             delivery.handed && (
-              <ButtonOccupiedUntil large={350} middle={306} small={288} padding={14} fontSize={16} isBig={true}>
+              <ButtonOccupiedUntil large={350} middle={306} small={288} padding={14} fontSize={16} isBig={false}>
                 Занята
               </ButtonOccupiedUntil>
             )

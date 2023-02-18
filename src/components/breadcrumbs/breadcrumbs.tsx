@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useLocation } from 'react-router-dom';
 
 import { useAppSelector } from '../../store/hooks';
 import { getBookDetails } from '../../store/selectors/book-details-selector';
@@ -6,28 +6,25 @@ import { getBookDetails } from '../../store/selectors/book-details-selector';
 import { BreadcrumbsContent, StyledBreadcrumbs, Text } from './styles';
 
 export const Breadcrumbs = () => {
-  const { book } = useAppSelector(getBookDetails);
-  const { categories, title } = book;
+  const { errorBookDetails } = useAppSelector(getBookDetails);
+  const { state } = useLocation();
 
   return (
     <StyledBreadcrumbs>
       <BreadcrumbsContent>
-        {categories !== null &&
-          (categories.length > 1 ? (
-            <Text>
-              {categories.map((categoryName) => (
-                <span key={uuidv4()}>{categoryName}, </span>
-              ))}
-              / {book.title}
-            </Text>
-          ) : (
-            <Text>
-              {categories.map((categoryName) => (
-                <span key={uuidv4()}>{categoryName} / </span>
-              ))}
-              {title}
-            </Text>
-          ))}
+        {!errorBookDetails && state && state.nameCategory && (
+          <Text>
+            {state.nameCategory.value} / {state.nameBook}
+          </Text>
+        )}
+
+        {errorBookDetails && state && state.nameCategory && <Text>{state.nameCategory.value} /</Text>}
+
+        {!errorBookDetails && state && state.nameCategory === null && <Text>Все книги / {state.nameBook}</Text>}
+
+        {errorBookDetails && state && state.nameCategory === null && <Text>Все книги / </Text>}
+
+        {state === null && <Text>Все книги / </Text>}
       </BreadcrumbsContent>
     </StyledBreadcrumbs>
   );

@@ -60,7 +60,13 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
                 </Text>
               </CustomAsidelink>
               {categories.map(({ name, path }) => (
-                <CustomAsidelink to={`${ROUTE.BOOKS}/${path}`} type='tertiary' onClick={toggleMenuMode} key={uuidv4()}>
+                <CustomAsidelink
+                  to={`${ROUTE.BOOKS}/${path}`}
+                  type='tertiary'
+                  onClick={toggleMenuMode}
+                  key={uuidv4()}
+                  state={name}
+                >
                   <p>
                     {name}
                     {/* <Amount>{amount}</Amount> */}

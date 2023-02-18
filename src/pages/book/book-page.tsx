@@ -25,11 +25,13 @@ export const BookPage = () => {
     <React.Fragment>
       <Breadcrumbs />
       {isLoadingBookDetails &&
-        (width < Breackpoint.SM ? <Loader size={22} /> : width < Breackpoint.MD ? <Loader size={44} /> : <Loader />)}
+        (width < Breackpoint.SM ? <Loader size={42} /> : width < Breackpoint.MD ? <Loader size={64} /> : <Loader />)}
 
-      {!isLoadingBookDetails && errorBookDetails && <Error>{errorBookDetails}</Error>}
+      {!isLoadingBookDetails && errorBookDetails && (
+        <Error>Что-то пошло не так. Обновите страницу через некоторое время.</Error>
+      )}
 
-      {book && !errorBookDetails && (
+      {book && !errorBookDetails && !isLoadingBookDetails && (
         <React.Fragment>
           <BookDetails />
           <BookDescription />

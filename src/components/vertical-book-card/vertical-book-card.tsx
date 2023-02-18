@@ -43,14 +43,18 @@ export const VerticalBookCard = ({ book }: IProps) => {
 
       <SubTitle>
         <WrapperText>
-          {authors!==null && authors.map((author)=><Text key={uuidv4()} >{author}, </Text>)}
-         {issueYear&&<Text>{issueYear}</Text>} 
+          {authors !== null && authors.map((author) => <Text key={uuidv4()}>{author}, </Text>)}
+          {issueYear && <Text>{issueYear}</Text>}
         </WrapperText>
-      </SubTitle> 
-      
-      {booking ===null ? <PrimaryButton>Забронировать</PrimaryButton>: (
-      booking.order  && delivery===null ? <ButtonOccupied>Забронировано</ButtonOccupied>:
-      delivery&&booking.order&& delivery.handed && <ButtonOccupiedUntil>Занята</ButtonOccupiedUntil>) }
+      </SubTitle>
+
+      {booking === null ? (
+        <PrimaryButton>Забронировать</PrimaryButton>
+      ) : booking.order && delivery === null ? (
+        <ButtonOccupied>Забронировано</ButtonOccupied>
+      ) : (
+        delivery && booking.order && delivery.handed && <ButtonOccupiedUntil>Занята</ButtonOccupiedUntil>
+      )}
     </StyledVerticalBookCard>
   ); // TODO: add "Занята до"
 };

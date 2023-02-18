@@ -34,12 +34,6 @@ export const ReviewsList = () => {
     toggleIsOpen();
   };
 
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
   return (
     <Wrapper>
       <TitleBox $open={isOpen}>

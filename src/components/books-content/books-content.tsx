@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { ROUTE } from '../../routes/routes';
 import { useAppSelector } from '../../store/hooks';
@@ -15,13 +15,18 @@ interface IProps {
 
 export const BooksContent = ({ isColumn, isSquare }: IProps) => {
   const { books } = useAppSelector(getBooks);
+  const { state } = useLocation();
 
   return (
     <React.Fragment>
       {isColumn && (
         <StyledHorizontalBooksContent>
           {books.map((book) => (
-            <Link to={`/${ROUTE.DETAILS}${book.id}`} key={book.id}>
+            <Link
+              to={`/${ROUTE.DETAILS}${book.id}`}
+              key={book.id}
+              state={{ nameCategory: state, nameBook: book.title }}
+            >
               <HorizontalBookCard book={book} />
             </Link>
           ))}
@@ -30,7 +35,11 @@ export const BooksContent = ({ isColumn, isSquare }: IProps) => {
       {isSquare && (
         <StyledVerticalBooksContent>
           {books.map((book) => (
-            <Link to={`/${ROUTE.DETAILS}${book.id}`} key={book.id}>
+            <Link
+              to={`/${ROUTE.DETAILS}${book.id}`}
+              key={book.id}
+              state={{ nameCategory: state, nameBook: book.title }}
+            >
               <VerticalBookCard book={book} />
             </Link>
           ))}
