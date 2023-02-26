@@ -90,7 +90,7 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
                   state={{ nameValue: name, pathValue: path }}
                 >
                   <span data-test-id={`burger-${path}`}>{name}</span>
-                  <Amount data-test-id={`burger-book-count-for-${path}`}>
+                  <Amount $isActive={currentPath.category === path} data-test-id={`burger-book-count-for-${path}`}>
                     {countCategories[name] ? countCategories[name] : '0'}
                   </Amount>
                 </CustomAsidelink>

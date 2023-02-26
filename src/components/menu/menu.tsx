@@ -73,7 +73,7 @@ export const Menu = () => {
                 state={{ nameValue: name, pathValue: path }}
               >
                 <span data-test-id={`navigation-${path}`}>{name}</span>
-                <Amount data-test-id={`navigation-book-count-for-${path}`}>
+                <Amount $isActive={currentPath.category === path} data-test-id={`navigation-book-count-for-${path}`}>
                   {countCategories[name] ? countCategories[name] : '0'}
                 </Amount>
               </CustomAsidelink>
