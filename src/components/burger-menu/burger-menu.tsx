@@ -4,7 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ChevronBottomIcon, ChevronTopIcon } from '../../assets';
 import { ROUTE } from '../../routes/routes';
-import { changeDisplayedBooks, changeDisplayedBooksByCategory } from '../../store/features/books-slice';
+import {
+  changeBooksBySearch,
+  changeDisplayedBooks,
+  changeDisplayedBooksByCategory,
+} from '../../store/features/books-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
@@ -33,7 +37,7 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
   const dispatch = useAppDispatch();
   const currentPath = useParams();
   const { categories } = useAppSelector(getCategories);
-  const { books, countCategories } = useAppSelector(getBooks);
+  const { books, countCategories, searchValue } = useAppSelector(getBooks);
   const currentPageHome = useMatch(ROUTE.HOME);
   const currentPageCategories = useMatch(ROUTE.CATEGORY);
 
@@ -51,7 +55,11 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
 
       if (result) dispatch(changeDisplayedBooksByCategory(result));
     }
-  }, [categories, currentPath.category, dispatch, books]);
+  }, [categories, currentPath, dispatch, books]);
+
+  useEffect(() => {
+    dispatch(changeBooksBySearch(searchValue));
+  }, [dispatch, currentPath, searchValue]);
 
   return (
     <StyledBurgerMenu $menuOpen={menuOpen}>

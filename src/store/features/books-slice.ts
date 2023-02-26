@@ -15,6 +15,8 @@ interface BooksState {
   ratingType: Rating;
   displayedBooks: IBook[];
   countCategories: { [key: string]: number };
+  searchValue: string;
+  booksBySearch: IBook[];
 }
 
 const initialState: BooksState = {
@@ -24,6 +26,8 @@ const initialState: BooksState = {
   ratingType: 'down',
   displayedBooks: [],
   countCategories: {},
+  searchValue: '',
+  booksBySearch: [],
 };
 
 const fetchBooks = createAsyncThunk<IBook[], undefined, { rejectValue: string }>(
@@ -60,6 +64,20 @@ const booksSlice = createSlice({
 
       state.displayedBooks = filterRating(booksArray, state.ratingType);
     },
+
+    changeSearchValue(state, { payload }: PayloadAction<string>) {
+      state.searchValue = payload.toLocaleLowerCase();
+    },
+
+    changeBooksBySearch(state, { payload }: PayloadAction<string>) {
+      if (payload === '') {
+        state.booksBySearch = [];
+      } else {
+        state.booksBySearch = state.displayedBooks.filter((book) =>
+          book.title.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
+        );
+      }
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -85,5 +103,11 @@ const booksSlice = createSlice({
 export default booksSlice.reducer;
 
 export { fetchBooks };
-export const { changeRatingType, changeDisplayedBooksByRating, changeDisplayedBooksByCategory, changeDisplayedBooks } =
-  booksSlice.actions;
+export const {
+  changeRatingType,
+  changeDisplayedBooksByRating,
+  changeDisplayedBooksByCategory,
+  changeDisplayedBooks,
+  changeSearchValue,
+  changeBooksBySearch,
+} = booksSlice.actions;

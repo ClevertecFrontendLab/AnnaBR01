@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CloseSearchIcon, ColumnIcon, FilterIconDown, FilterIconUp, SearchIcon, SquareIcon } from '../../assets';
 import { useToggle } from '../../hooks/use-toggle';
 import { useWindowSize } from '../../hooks/use-window-size';
-import { changeDisplayedBooksByRating, changeRatingType } from '../../store/features/books-slice';
+import {
+  changeBooksBySearch,
+  changeDisplayedBooksByRating,
+  changeRatingType,
+  changeSearchValue,
+} from '../../store/features/books-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { Breackpoint } from '../../ui/media';
@@ -55,8 +60,11 @@ export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareV
 
   const handleSearchInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     changeSearchInputValue(e.target.value);
-    console.log(searchInputValue);
   };
+
+  useEffect(() => {
+    dispatch(changeSearchValue(searchInputValue));
+  }, [dispatch, searchInputValue]);
 
   return (
     <StyledNavigation>
