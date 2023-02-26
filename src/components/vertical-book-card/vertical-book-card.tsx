@@ -1,7 +1,11 @@
+import { useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { NoImageIcon } from '../../assets';
+import { useAppSelector } from '../../store/hooks';
+import { getBooks } from '../../store/selectors/books-selectors';
 import { IBook } from '../../types/types';
+import { Hightlight } from '../hightlight/hightlight';
 import { ButtonOccupied, ButtonOccupiedUntil, PrimaryButton, Stars } from '..';
 
 import {
@@ -22,6 +26,9 @@ interface IProps {
 
 export const VerticalBookCard = ({ book }: IProps) => {
   const { image, issueYear, authors, title, rating, booking, delivery } = book;
+  const { searchValue } = useAppSelector(getBooks);
+
+  const light = useCallback((str: string) => <Hightlight filter={searchValue} str={str} />, [searchValue]);
 
   return (
     <StyledVerticalBookCard data-test-id='card'>
@@ -38,7 +45,7 @@ export const VerticalBookCard = ({ book }: IProps) => {
       <Stars rating={rating} gap={6} />
 
       <WrapperTitle>
-        <Title>{title}</Title>
+        <Title>{light(title)}</Title>
       </WrapperTitle>
 
       <SubTitle>

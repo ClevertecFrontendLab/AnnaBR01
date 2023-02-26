@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { HorizontalBookCard, VerticalBookCard } from '..';
 
-import { StyledHorizontalBooksContent, StyledVerticalBooksContent, NoBooks } from './styles';
+import { NoBooks, StyledHorizontalBooksContent, StyledVerticalBooksContent } from './styles';
 
 interface IProps {
   isColumn: boolean;

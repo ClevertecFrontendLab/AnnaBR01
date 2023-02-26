@@ -1,7 +1,11 @@
+import { useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { NoImageIcon } from '../../assets';
+import { useAppSelector } from '../../store/hooks';
+import { getBooks } from '../../store/selectors/books-selectors';
 import { IBook } from '../../types/types';
+import { Hightlight } from '../hightlight/hightlight';
 import { ButtonOccupied, ButtonOccupiedUntil, PrimaryButton, Stars } from '..';
 
 import {
@@ -22,6 +26,9 @@ interface IProps {
 
 export const HorizontalBookCard = ({ book }: IProps) => {
   const { image, issueYear, authors, title, rating, booking, delivery } = book;
+  const { searchValue } = useAppSelector(getBooks);
+
+  const light = useCallback((str: string) => <Hightlight filter={searchValue} str={str} />, [searchValue]);
 
   return (
     <StyledHorizontalBookCard data-test-id='card'>
@@ -36,7 +43,7 @@ export const HorizontalBookCard = ({ book }: IProps) => {
       </WrapperImage>
 
       <WrapperContent>
-        <Title>{title}</Title>
+        <Title>{light(title)}</Title>
 
         <WrapperText>
           {authors !== null && authors.map((author) => <Text key={uuidv4()}>{author}, </Text>)}

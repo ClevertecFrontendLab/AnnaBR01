@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import { CloseSearchIcon, ColumnIcon, FilterIconDown, FilterIconUp, SearchIcon, SquareIcon } from '../../assets';
 import { useToggle } from '../../hooks/use-toggle';
 import { useWindowSize } from '../../hooks/use-window-size';
-import {
-  changeBooksBySearch,
-  changeDisplayedBooksByRating,
-  changeRatingType,
-  changeSearchValue,
-} from '../../store/features/books-slice';
+import { changeDisplayedBooksByRating, changeRatingType, changeSearchValue } from '../../store/features/books-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { Breackpoint } from '../../ui/media';
