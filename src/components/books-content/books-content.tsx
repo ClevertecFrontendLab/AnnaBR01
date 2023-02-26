@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { HorizontalBookCard, VerticalBookCard } from '..';
 
-import { StyledHorizontalBooksContent, StyledVerticalBooksContent } from './styles';
+import { StyledHorizontalBooksContent, StyledVerticalBooksContent, NoBooks } from './styles';
 
 interface IProps {
   isColumn: boolean;
@@ -14,18 +14,22 @@ interface IProps {
 }
 
 export const BooksContent = ({ isColumn, isSquare }: IProps) => {
-  const { books } = useAppSelector(getBooks);
+  const { displayedBooks } = useAppSelector(getBooks);
   const { state } = useLocation();
 
-  return (
+  const pathStateUrl = state && state.value && state.value.pathValue !== null ? state.value.pathValue : 'all';
+  const nameStateCategory =
+    state && state.value && state.value.nameValue !== null ? state.value.nameValue : 'Все книги';
+
+  return displayedBooks.length > 0 ? (
     <React.Fragment>
       {isColumn && (
         <StyledHorizontalBooksContent>
-          {books.map((book) => (
+          {displayedBooks.map((book) => (
             <Link
-              to={`/${ROUTE.DETAILS}${book.id}`}
+              to={`${ROUTE.BOOKS}/${pathStateUrl}/${book.id}`}
               key={book.id}
-              state={{ nameCategory: state, nameBook: book.title }}
+              state={{ nameCategory: nameStateCategory, nameBook: book.title, pathCategory: pathStateUrl }}
             >
               <HorizontalBookCard book={book} />
             </Link>
@@ -34,11 +38,11 @@ export const BooksContent = ({ isColumn, isSquare }: IProps) => {
       )}
       {isSquare && (
         <StyledVerticalBooksContent>
-          {books.map((book) => (
+          {displayedBooks.map((book) => (
             <Link
-              to={`/${ROUTE.DETAILS}${book.id}`}
+              to={`${ROUTE.BOOKS}/${pathStateUrl}/${book.id}`}
               key={book.id}
-              state={{ nameCategory: state, nameBook: book.title }}
+              state={{ nameCategory: nameStateCategory, nameBook: book.title, pathCategory: pathStateUrl }}
             >
               <VerticalBookCard book={book} />
             </Link>
@@ -46,5 +50,7 @@ export const BooksContent = ({ isColumn, isSquare }: IProps) => {
         </StyledVerticalBooksContent>
       )}
     </React.Fragment>
+  ) : (
+    <NoBooks data-test-id='empty-category'>В этой категории книг ещё нет</NoBooks>
   );
 };

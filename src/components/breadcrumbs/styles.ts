@@ -34,6 +34,24 @@ const BreadcrumbsContent = styled.div`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  grid-gap: 11px;
+  color: #a7a7a7;
+
+  ${Media.MD} {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  ${Media.SM} {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+  }
+`;
+
 const Text = styled.p`
   color: #a7a7a7;
 
@@ -50,4 +68,4 @@ const Text = styled.p`
   }
 `;
 
-export { StyledBreadcrumbs, BreadcrumbsContent, Text };
+export { StyledBreadcrumbs, BreadcrumbsContent, Wrapper, Text };

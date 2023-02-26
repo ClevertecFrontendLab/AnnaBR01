@@ -72,7 +72,7 @@ const Separator = styled.div`
 `;
 
 const Text = styled.p<{ $open: boolean }>`
-  display: ${({ $open }) => ($open ? 'flex' : 'none')};
+  display: ${({ $open }) => ($open ? 'block' : 'none')};
 `;
 
 export { Wrapper, CategoryBox, Amount, WrapperChevron, ChevronButton, StyledBurgerMenu, Separator, Text };

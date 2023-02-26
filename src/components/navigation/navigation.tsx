@@ -1,6 +1,10 @@
-import { CloseSearchIcon, ColumnIcon, FilterIcon, SearchIcon, SquareIcon } from '../../assets';
+import { useState } from 'react';
+import { CloseSearchIcon, ColumnIcon, FilterIconDown, FilterIconUp, SearchIcon, SquareIcon } from '../../assets';
 import { useToggle } from '../../hooks/use-toggle';
 import { useWindowSize } from '../../hooks/use-window-size';
+import { changeDisplayedBooksByRating, changeRatingType } from '../../store/features/books-slice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getBooks } from '../../store/selectors/books-selectors';
 import { Breackpoint } from '../../ui/media';
 
 import {
@@ -11,10 +15,9 @@ import {
   Search,
   SearchButton,
   SearchInput,
-  SelectOption,
   SortIconContainer,
   StyledNavigation,
-  StyledSelect,
+  Text,
   WrapperInputs,
   WrapperSorting,
 } from './styles';
@@ -27,8 +30,12 @@ interface IProps {
 }
 
 export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareView }: IProps) => {
+  const dispatch = useAppDispatch();
   const { width = 0 } = useWindowSize();
+  const { ratingType } = useAppSelector(getBooks);
   const [isSearchOpen, toggleIsSearchOpen] = useToggle(false);
+  const [activeColor, toggleActiveColor] = useState(false);
+  const [searchInputValue, changeSearchInputValue] = useState('');
 
   const handleSearchView = () => {
     if (width < Breackpoint.SM) {
@@ -41,12 +48,22 @@ export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareV
     handleSquareView();
   };
 
+  const handleRating = () => {
+    dispatch(changeRatingType());
+    dispatch(changeDisplayedBooksByRating());
+  };
+
+  const handleSearchInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changeSearchInputValue(e.target.value);
+    console.log(searchInputValue);
+  };
+
   return (
     <StyledNavigation>
       <WrapperInputs $isSearchOpen={isSearchOpen}>
         <Search $isSearchOpen={isSearchOpen}>
           <SearchButton onClick={handleSearchView} $isSearchOpen={isSearchOpen} data-test-id='button-search-open'>
-            <SearchIcon />
+            <SearchIcon fill={activeColor ? '#F83600' : '#A7A7A7'} />
           </SearchButton>
 
           <SearchInput
@@ -54,6 +71,14 @@ export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareV
             type='text'
             $isSearchOpen={isSearchOpen}
             data-test-id='input-search'
+            onFocus={() => {
+              toggleActiveColor(true);
+            }}
+            onBlur={() => {
+              toggleActiveColor(false);
+            }}
+            value={searchInputValue}
+            onChange={handleSearchInputValue}
           />
           <CloseSearchButton
             $isSearchClose={!isSearchOpen}
@@ -64,15 +89,9 @@ export const Navigation = ({ isColumn, isSquare, handleColumnView, handleSquareV
           </CloseSearchButton>
         </Search>
 
-        <Filter $isSearchOpen={isSearchOpen}>
-          <SortIconContainer>
-            <FilterIcon />
-          </SortIconContainer>
-          <StyledSelect name='sort' id='sort-select' defaultValue='DEFAULT'>
-            <SelectOption value='DEFAULT'>По рейтингу</SelectOption>
-            <SelectOption value='date'>По дате</SelectOption>
-            <SelectOption value='price'>По цене</SelectOption>
-          </StyledSelect>
+        <Filter $isSearchOpen={isSearchOpen} type='button' onClick={handleRating} data-test-id='sort-rating-button'>
+          <SortIconContainer>{ratingType === 'down' ? <FilterIconDown /> : <FilterIconUp />}</SortIconContainer>
+          <Text>По рейтингу </Text>
         </Filter>
       </WrapperInputs>
 

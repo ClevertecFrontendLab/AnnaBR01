@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useState } from 'react';
 
 import { useWindowSize } from '../../hooks/use-window-size';
@@ -17,9 +18,9 @@ export interface IView {
 
 export const BooksList = () => {
   const { width = 0 } = useWindowSize();
-
   const { isLoadingBooks, errorBooks, books } = useAppSelector(getBooks);
   const { isLoadingCategories, errorCategories, categories } = useAppSelector(getCategories);
+
   const [isColumn, setIsColumn] = useState(true);
 
   const [isSquare, setIsSquare] = useState(false);
@@ -49,7 +50,7 @@ export const BooksList = () => {
             isSquare={isSquare}
             handleSquareView={handleSquareView}
           />
-          <BooksContent isColumn={isColumn} isSquare={isSquare} />{' '}
+          <BooksContent isColumn={isColumn} isSquare={isSquare} />
         </React.Fragment>
       )}
     </StyledBooklist>

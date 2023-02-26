@@ -8,6 +8,8 @@ const Wrapper = styled(ContainerFlex)`
   width: 1110px;
   margin: 0px auto;
   min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
 
   ${Media.MD} {
     width: 100%;

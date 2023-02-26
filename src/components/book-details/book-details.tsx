@@ -52,7 +52,7 @@ export const BookDetails = () => {
         </WrapperImage>
 
         <WrapperContent>
-          <Title>{title}</Title>
+          <Title data-test-id='book-title'>{title}</Title>
 
           <Author>
             {authors !== null && authors.map((author) => <WrapperText key={uuidv4()}>{author}, </WrapperText>)}
