@@ -8,7 +8,8 @@ import { ReactComponent as CloseSearchIcon } from './icons/close-search-icon.svg
 import { ReactComponent as ColumnIcon } from './icons/column-icon.svg';
 import { ReactComponent as CrossMarkIcon } from './icons/cross-mark-icon.svg';
 import { ReactComponent as FacebookIcon } from './icons/facebook-icon.svg';
-import { ReactComponent as FilterIcon } from './icons/filter-icon.svg';
+import { ReactComponent as FilterIconDown } from './icons/filter-icon-down.svg';
+import { ReactComponent as FilterIconUp } from './icons/filter-icon-up.svg';
 import { ReactComponent as InstagramIcon } from './icons/instagram-icon.svg';
 import { ReactComponent as LinkedinIcon } from './icons/linkedin-icon.svg';
 import { ReactComponent as LogoIcon } from './icons/logo.svg';
@@ -35,7 +36,8 @@ export {
   StarIcon,
   PaintedStarIcon,
   NoImageIcon,
-  FilterIcon,
+  FilterIconDown,
+  FilterIconUp,
   ChevronBottomIcon,
   ChevronTopIcon,
   CrossMarkIcon,

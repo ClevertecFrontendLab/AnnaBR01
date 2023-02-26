@@ -25,4 +25,24 @@ const StyledHorizontalBooksContent = styled(ContainerFlexColumn)`
   grid-gap: 16px;
 `;
 
-export { StyledVerticalBooksContent, StyledHorizontalBooksContent };
+const NoBooks = styled.p`
+  margin-top: 200px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+
+  ${Media.MD} {
+    margin-top: 226px;
+  }
+
+  ${Media.SM} {
+    margin-top: 137px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+`;
+
+export { StyledVerticalBooksContent, StyledHorizontalBooksContent, NoBooks };

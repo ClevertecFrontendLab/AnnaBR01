@@ -9,9 +9,9 @@ interface IProps {
   to: ROUTE | string;
   children: ReactNode;
   onClick?: () => void;
-  type: 'primary' | 'secondary' | 'tertiary';
+  type: 'primary' | 'secondary';
   open?: boolean;
-  state?: string;
+  state?: { nameValue: string; pathValue: string };
 }
 
 export const CustomAsidelink = ({ to, children, onClick, type, open, state }: IProps) => {

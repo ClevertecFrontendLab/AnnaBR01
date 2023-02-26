@@ -105,3 +105,5 @@ export interface IBookDetails {
       ]
     | null;
 }
+
+export type Rating = 'down' | 'up';

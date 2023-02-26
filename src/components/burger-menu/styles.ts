@@ -45,12 +45,13 @@ const CategoryBox = styled(ContainerFlexColumn)<{ $open: boolean }>`
   padding-left: 20px;
 `;
 
-const Amount = styled.span`
+const Amount = styled.span<{ $isActive: boolean }>`
   padding-left: 6px;
   font-size: 14px;
+  font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.1px;
-  color: #a7a7a7;
+  color: ${({ $isActive }) => ($isActive ? '#363636' : '#a7a7a7')};
 `;
 
 const WrapperChevron = styled(ContainerFlexBeetween)`
@@ -72,7 +73,7 @@ const Separator = styled.div`
 `;
 
 const Text = styled.p<{ $open: boolean }>`
-  display: ${({ $open }) => ($open ? 'flex' : 'none')};
+  display: ${({ $open }) => ($open ? 'block' : 'none')};
 `;
 
 export { Wrapper, CategoryBox, Amount, WrapperChevron, ChevronButton, StyledBurgerMenu, Separator, Text };
