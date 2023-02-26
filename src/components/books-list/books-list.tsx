@@ -21,9 +21,9 @@ export const BooksList = () => {
   const { isLoadingBooks, errorBooks, books } = useAppSelector(getBooks);
   const { isLoadingCategories, errorCategories, categories } = useAppSelector(getCategories);
 
-  const [isColumn, setIsColumn] = useState(true);
+  const [isColumn, setIsColumn] = useState(false);
 
-  const [isSquare, setIsSquare] = useState(false);
+  const [isSquare, setIsSquare] = useState(true);
 
   const handleColumnView = () => {
     setIsColumn(!isColumn);
