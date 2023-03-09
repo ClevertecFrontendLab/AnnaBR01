@@ -1,3 +1,4 @@
+import { ReactComponent as AuthArrowIcon } from './icons/auth-arrow-icon.svg';
 import { ReactComponent as BurgerIcon } from './icons/burger-icon.svg';
 import { ReactComponent as ChevronBottomIcon } from './icons/chevron-bottom-icon.svg';
 import { ReactComponent as ChevronDownIcon } from './icons/chevron-down-icon.svg';
@@ -15,7 +16,10 @@ import { ReactComponent as LinkedinIcon } from './icons/linkedin-icon.svg';
 import { ReactComponent as LogoIcon } from './icons/logo.svg';
 import { ReactComponent as LogoNameIcon } from './icons/name-logo.svg';
 import { ReactComponent as NoImageIcon } from './icons/no-image-icon.svg';
+import { ReactComponent as OkPasswordIcon } from './icons/ok-password-icon.svg';
 import { ReactComponent as PaintedStarIcon } from './icons/painted-star-icon.svg';
+import { ReactComponent as PasswordCloseIcon } from './icons/password-close-icon.svg';
+import { ReactComponent as PasswordOpenIcon } from './icons/password-open-icon.svg';
 import { ReactComponent as SearchIcon } from './icons/search-icon.svg';
 import { ReactComponent as SquareIcon } from './icons/square-icon.svg';
 import { ReactComponent as StarIcon } from './icons/star-icon.svg';
@@ -46,4 +50,8 @@ export {
   CloseSearchIcon,
   WarningIcon,
   CloseErrorIcon,
+  AuthArrowIcon,
+  OkPasswordIcon,
+  PasswordOpenIcon,
+  PasswordCloseIcon,
 };

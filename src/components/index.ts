@@ -6,10 +6,14 @@ import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { BurgerMenu } from './burger-menu/burger-menu';
 import { ButtonOccupied } from './button-occupied/button-occupied';
 import { ButtonOccupiedUntil } from './button-occupied-until/button-occupied-until';
+import { CustomAsidelink } from './custom-aside-link/custom-aside-link';
 import { Error } from './error/error';
 import { Footer } from './footer/footer';
 import { Header } from './header/header';
+import { Hightlight } from './hightlight/hightlight';
 import { HorizontalBookCard } from './horizontal-book-card/horizontal-book-card';
+import { Input } from './input/input';
+import { Loader } from './loader/loader';
 import { MainTemplate } from './main-template/main-template';
 import { Menu } from './menu/menu';
 import { Navigation } from './navigation/navigation';
@@ -48,4 +52,8 @@ export {
   SliderDesktop,
   SliderTablet,
   Error,
+  Loader,
+  CustomAsidelink,
+  Hightlight,
+  Input,
 };

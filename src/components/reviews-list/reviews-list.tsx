@@ -7,9 +7,8 @@ import { useToggle } from '../../hooks/use-toggle';
 import { useAppSelector } from '../../store/hooks';
 import { getBookDetails } from '../../store/selectors/book-details-selector';
 import { SmallTitle } from '../../ui/typography';
-import { PrimaryButton } from '../primary-button/primary-button';
 import { Stars } from '../stars/stars';
-import { Separator } from '..';
+import { PrimaryButton, Separator } from '..';
 
 import {
   Box,

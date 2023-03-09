@@ -5,8 +5,7 @@ import { NoImageIcon } from '../../assets';
 import { useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { IBook } from '../../types/types';
-import { Hightlight } from '../hightlight/hightlight';
-import { ButtonOccupied, ButtonOccupiedUntil, PrimaryButton, Stars } from '..';
+import { ButtonOccupied, ButtonOccupiedUntil, Hightlight, PrimaryButton, Stars } from '..';
 
 import {
   Image,
