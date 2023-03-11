@@ -11,7 +11,7 @@ import { ROUTE } from './routes/routes';
 import { store } from './store/store';
 import { GlobalStyle } from './ui/global-styles';
 import { MainTemplate, SecondTemplate } from './components';
-import { AuthPage, MainPage, RegistrationPage } from './pages';
+import { AuthPage, ForgotPasswordPage, MainPage, RegistrationPage } from './pages';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -35,9 +35,9 @@ root.render(
           </Route>
 
           <Route element={<WithoutAuth />}>
-            <Route path={ROUTE.AUTH} element={<AuthPage />} />
             <Route path={ROUTE.REGISTRATION} element={<RegistrationPage />} />
-            <Route path={ROUTE.FORGOT_PASS} element={<ContractPage content='offer' />} />
+            <Route path={ROUTE.AUTH} element={<AuthPage />} />
+            <Route path={ROUTE.FORGOT_PASS} element={<ForgotPasswordPage />} />
           </Route>
         </Routes>
       </HashRouter>

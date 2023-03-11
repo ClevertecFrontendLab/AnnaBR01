@@ -1,8 +1,9 @@
-import React, { ChangeEvent, FocusEvent, HTMLInputTypeAttribute } from 'react';
+/* eslint-disable prefer-const */
+import React, { ChangeEvent, FocusEvent, HTMLInputTypeAttribute, useState } from 'react';
 
 import { OkPasswordIcon, PasswordCloseIcon, PasswordOpenIcon } from '../../assets';
 
-import { InputWrapper, LabelPassword, OkPassword, Placeholder, StyledInput } from './styles';
+import { InputWrapper, LabelPassword, OkPassword, Placeholder, StyledInputAuth } from './styles';
 
 const placeholderActiveInputStyle = {
   top: '6px',
@@ -27,51 +28,70 @@ export type ViewPassword = 'open' | 'close';
 interface IProps {
   value: string | number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  onBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onBlurEvent?: (event: FocusEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>) => void;
   type: HTMLInputTypeAttribute;
   placeholder: string;
   errorInput: boolean;
   activeInput: boolean;
   okPassword?: boolean;
-  viewPassword?: ViewPassword;
+  name: string;
 }
 
-export const Input = ({
+export const InputAuth = ({
   value,
   onChange,
   placeholder,
   type,
   errorInput,
   onFocus,
-  onBlur,
+  onBlurEvent,
   activeInput,
   okPassword,
-  viewPassword,
+  name,
 }: IProps) => {
   const renderingOk = okPassword && type === 'password' ? true : false;
+  const [viewPasswordIcon, setViewPasswordIcon] = useState<ViewPassword>('close');
+  const [renderingType, setRenderingType] = useState(type);
+
+  const toggleViewPasswordIcon = () => {
+    if (viewPasswordIcon === 'close') {
+      setViewPasswordIcon('open');
+      setRenderingType('text');
+    } else {
+      setViewPasswordIcon('close');
+      setRenderingType(type);
+    }
+  };
 
   return (
     <InputWrapper>
-      <StyledInput
+      <StyledInputAuth
         value={value}
         onChange={onChange}
         onFocus={onFocus}
-        onBlur={onBlur}
-        type={type}
+        onBlur={onBlurEvent}
+        type={renderingType}
         $errorInput={errorInput}
         $renderingOk={renderingOk}
+        name={name}
       />
       <Placeholder style={activeInput ? placeholderActiveInputStyle : placeholderInputStyle}>{placeholder}</Placeholder>
 
       {okPassword && type === 'password' && (
         <OkPassword>
-          <OkPasswordIcon />
+          <OkPasswordIcon data-test-id='checkmark' />
         </OkPassword>
       )}
 
-      {type === 'password' && (
-        <LabelPassword>{viewPassword === 'open' ? <PasswordOpenIcon /> : <PasswordCloseIcon />}</LabelPassword>
+      {type === 'password' && value && (
+        <LabelPassword onClick={toggleViewPasswordIcon}>
+          {viewPasswordIcon === 'open' ? (
+            <PasswordOpenIcon data-test-id='eye-opened' />
+          ) : (
+            <PasswordCloseIcon data-test-id='eye-closed' />
+          )}
+        </LabelPassword>
       )}
     </InputWrapper>
   );

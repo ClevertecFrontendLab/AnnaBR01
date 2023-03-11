@@ -85,6 +85,7 @@ const LogoContainer = styled(ContainerFlex)`
 
 const UserInfo = styled(ContainerFlex)`
   grid-gap: 16px;
+  cursor: pointer;
 
   ${Media.MD} {
     display: none;
@@ -96,4 +97,20 @@ const Text = styled.p`
   color: #363636;
 `;
 
-export { Title, Box, LogoContainer, UserInfo, Text, Container, StyledHeader, BurgerBox };
+const UserBurger = styled.div`
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 116px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  grid-gap: 32px;
+  padding: 32px 24px;
+  box-shadow: 4px 4px 4px rgba(54, 54, 54, 0.05), -4px 4px 4px rgba(54, 54, 54, 0.05);
+  border-radius: 0px 0px 10px 10px;
+  background: #ffffff;
+`;
+
+export { Title, Box, LogoContainer, UserInfo, Text, Container, StyledHeader, BurgerBox, UserBurger };

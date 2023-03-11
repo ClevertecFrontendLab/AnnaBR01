@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { ContainerFlexColumn } from '../../ui/containers';
 import { Media } from '../../ui/media';
 
 const Step = styled.p`
@@ -34,28 +33,13 @@ const Text = styled.div`
   color: #363636;
 `;
 
-const RegistrationForm = styled.form`
+const Registration = styled.form`
   display: flex;
   flex-direction: column;
 `;
 
-const InputError = styled.p`
-  margin-top: -34px;
-  margin-left: 12px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: #f42c4f;
+const InputWrapper = styled.div`
+  position: relative;
 `;
 
-const Message = styled.p`
-  margin-top: -34px;
-  margin-left: 12px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.2px;
-  color: #a7a7a7;
-`;
-
-export { Step, TextWrapper, Text, RegistrationForm, InputError, Message };
+export { Step, TextWrapper, Text, Registration, InputWrapper };

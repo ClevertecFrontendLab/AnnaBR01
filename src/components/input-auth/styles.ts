@@ -5,7 +5,7 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
-const StyledInput = styled.input<{ $errorInput: boolean; $renderingOk: boolean }>`
+const StyledInputAuth = styled.input<{ $errorInput: boolean; $renderingOk: boolean }>`
   width: 100%;
   padding: 26px 12px 12px;
   margin-bottom: 36px;
@@ -36,6 +36,7 @@ const LabelPassword = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
+  cursor: pointer;
 `;
 
-export { StyledInput, Placeholder, LabelPassword, InputWrapper, OkPassword };
+export { StyledInputAuth, Placeholder, LabelPassword, InputWrapper, OkPassword };

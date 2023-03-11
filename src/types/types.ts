@@ -1,3 +1,5 @@
+// Boooks
+
 export interface IBook {
   issueYear: string | null;
   rating: number | null;
@@ -107,3 +109,64 @@ export interface IBookDetails {
 }
 
 export type Rating = 'down' | 'up';
+
+// User
+
+export type RegistrationFormValues = {
+  email: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+};
+
+export type AuthFormValues = {
+  identifier: string;
+  password: string;
+};
+
+export interface IRegistrationUsrerRequest {
+  email: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
+
+export interface IUsrerResponse {
+  jwt: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+  };
+}
+
+export interface IAuthUsrerRequest {
+  identifier: string;
+  password: string;
+}
+
+export interface IUsrer {
+  id: number | null;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}

@@ -4,13 +4,11 @@ import { ContainerFlexColumn } from '../../ui/containers';
 import { Media } from '../../ui/media';
 
 interface IProps {
-  paddingSmBottom: number;
   gapLg: number;
   gapSm: number;
 }
 
 const StyledAuthLayout = styled(ContainerFlexColumn).attrs<IProps>((props) => ({
-  paddingSmBottom: `${props.paddingSmBottom}px`,
   gapLg: `${props.gapLg}px`,
   gapSm: `${props.gapSm}px`,
 }))<IProps>`
@@ -24,7 +22,6 @@ const StyledAuthLayout = styled(ContainerFlexColumn).attrs<IProps>((props) => ({
     grid-gap: ${({ gapSm }) => gapSm};
     padding-top: 16px;
     padding-inline: 16px;
-    padding-bottom: ${({ paddingSmBottom }) => paddingSmBottom};
   }
 `;
 
@@ -34,6 +31,11 @@ const Logo = styled.p`
   line-height: 40px;
   letter-spacing: 0.1px;
   color: #ffffff;
+
+  ${Media.SM} {
+    font-size: 18px;
+    line-height: 28px;
+  }
 `;
 
 const StyledForm = styled.div`

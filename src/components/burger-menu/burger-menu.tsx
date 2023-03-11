@@ -24,6 +24,7 @@ import {
   Wrapper,
   WrapperChevron,
 } from './styles';
+import { logout } from '../../store/features/user-slice';
 
 interface IProps {
   menuOpen: boolean;
@@ -112,8 +113,14 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
         <CustomAsidelink to='account' type='primary' onClick={closeBurgerMenu}>
           Профиль
         </CustomAsidelink>
-        <CustomAsidelink to='example' type='primary' onClick={closeBurgerMenu}>
-          Выход
+        <CustomAsidelink
+          to={ROUTE.AUTH}
+          type='primary'
+          onClick={() => {
+            dispatch(logout());
+          }}
+        >
+          <p data-test-id='exit-button'> Выход</p>
         </CustomAsidelink>
       </Wrapper>
     </StyledBurgerMenu>
