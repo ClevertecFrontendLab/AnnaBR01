@@ -110,7 +110,7 @@ export interface IBookDetails {
 
 export type Rating = 'down' | 'up';
 
-// User
+// Autentification
 
 export type RegistrationFormValues = {
   email: string;
@@ -124,6 +124,10 @@ export type RegistrationFormValues = {
 export type AuthFormValues = {
   identifier: string;
   password: string;
+};
+
+export type SendEmailFormValues = {
+  email: string;
 };
 
 export interface IRegistrationUsrerRequest {
@@ -169,4 +173,12 @@ export interface IUsrer {
   firstName: string;
   lastName: string;
   phone: string;
+}
+
+export interface IForgotPasswordRequest {
+  email: string;
+}
+
+export interface IForgotPasswordResponse {
+  ok: string;
 }

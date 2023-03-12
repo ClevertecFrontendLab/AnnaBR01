@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-import { IAuthUsrerRequest, IBook, IBookDetails, ICategory, IRegistrationUsrerRequest } from '../types/types';
+import {
+  IAuthUsrerRequest,
+  IBook,
+  IBookDetails,
+  ICategory,
+  IForgotPasswordRequest,
+  IRegistrationUsrerRequest,
+} from '../types/types';
 
 enum Endpoint {
   BOOKS = 'books',
@@ -8,6 +15,7 @@ enum Endpoint {
   BOOK = 'books/',
   REGISTRATION = 'auth/local/register',
   AUTH = 'auth/local',
+  FORGOT_PASSWORD = 'auth/forgot-password',
 }
 
 class CleverlandAPI {
@@ -53,6 +61,12 @@ class CleverlandAPI {
 
   public async authUser(body: IAuthUsrerRequest) {
     const { data } = await this.API.post(Endpoint.AUTH, body);
+
+    return data;
+  }
+
+  public async forgotPassword(body: IForgotPasswordRequest) {
+    const { data } = await this.API.post(Endpoint.FORGOT_PASSWORD, body);
 
     return data;
   }

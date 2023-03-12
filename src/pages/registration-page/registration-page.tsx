@@ -1,18 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
-import { AuthLayout, Loader, RegistrationForm, StatusBlock } from '../../components';
-import { useWindowSize } from '../../hooks/use-window-size';
+import { AuthLayout, RegistrationForm, StatusBlock } from '../../components';
 import { ROUTE } from '../../routes/routes';
 import { clearRegistration, fetchRegistrationUser } from '../../store/features/registration-user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getRegistrationUserInfo } from '../../store/selectors/registration-user-selector';
-import { Breackpoint } from '../../ui/media';
 
 export const RegistrationPage = () => {
   const dispatch = useAppDispatch();
-  const { isLoadingRegistration, user, isRegistration, errorRegistrationMessage, errorRegistrationStatus } =
+  const { user, isRegistration, errorRegistrationMessage, errorRegistrationStatus } =
     useAppSelector(getRegistrationUserInfo);
-  const { width = 0 } = useWindowSize();
   const navigate = useNavigate();
 
   return isRegistration ? (
@@ -48,8 +45,6 @@ export const RegistrationPage = () => {
     )
   ) : (
     <AuthLayout title='Регистрация'>
-      {isLoadingRegistration &&
-        (width < Breackpoint.SM ? <Loader size={42} /> : width < Breackpoint.MD ? <Loader size={64} /> : <Loader />)}
       <RegistrationForm />
     </AuthLayout>
   );

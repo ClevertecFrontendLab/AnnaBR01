@@ -42,6 +42,12 @@ const Logo = styled.p`
   }
 `;
 
+const Title = styled.h3`
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+`;
+
 const StyledForm = styled.div.attrs<IPropsForm>((props) => ({
   paddingTop: `${props.paddingTop}px`,
 }))<IPropsForm>`
@@ -59,12 +65,6 @@ const StyledForm = styled.div.attrs<IPropsForm>((props) => ({
     padding-bottom: 24px;
     padding-inline: 16px;
   }
-`;
-
-const Title = styled.h3`
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
 `;
 
 export { StyledAuthLayout, Logo, StyledForm, Title };

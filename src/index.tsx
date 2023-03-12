@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import { RequareAuth } from './components/requare-auth/requare-auth';
-import { WithoutAuth } from './components/without-auth/without-auth';
 import { BookPage } from './pages/book';
 import { ContractPage } from './pages/contract/contract';
 import { ROUTE } from './routes/routes';
 import { store } from './store/store';
 import { GlobalStyle } from './ui/global-styles';
-import { MainTemplate, SecondTemplate } from './components';
+import { MainTemplate, RequareAuth, SecondTemplate, WithoutAuth } from './components';
 import { AuthPage, ForgotPasswordPage, MainPage, RegistrationPage } from './pages';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

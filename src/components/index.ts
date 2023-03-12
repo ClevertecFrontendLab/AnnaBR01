@@ -27,14 +27,18 @@ import { Navigation } from './navigation/navigation';
 import { NoRating } from './no-rating/no-rating';
 import { PrimaryButton } from './primary-button/primary-button';
 import { RegistrationForm } from './registration-form/registration-form';
+import { RequareAuth } from './requare-auth/requare-auth';
+import { ResetPasswordForm } from './reset-password-form/reset-password-form';
 import { ReviewsList } from './reviews-list/reviews-list';
 import { SecondTemplate } from './second-template/second-template';
+import { SendEmailForm } from './send-email-form/send-email-form';
 import { Separator } from './separator/separator';
 import { SliderDesktop } from './slider-desktop/slider-desktop';
 import { SliderTablet } from './slider-tablet/slider-tablet';
 import { Stars } from './stars/stars';
 import { StatusBlock } from './status-block/status-block';
 import { VerticalBookCard } from './vertical-book-card/vertical-book-card';
+import { WithoutAuth } from './without-auth/without-auth';
 
 export {
   Menu,
@@ -74,4 +78,8 @@ export {
   RegistrationForm,
   AuthForm,
   StatusBlock,
+  SendEmailForm,
+  RequareAuth,
+  WithoutAuth,
+  ResetPasswordForm,
 };

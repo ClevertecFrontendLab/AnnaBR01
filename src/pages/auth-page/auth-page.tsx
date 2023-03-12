@@ -1,13 +1,10 @@
-import { AuthForm, AuthLayout, Loader, StatusBlock } from '../../components';
-import { useWindowSize } from '../../hooks/use-window-size';
+import { AuthForm, AuthLayout, StatusBlock } from '../../components';
 import { fetchAuthUser } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getUserInfo } from '../../store/selectors/user-selector';
-import { Breackpoint } from '../../ui/media';
 
 export const AuthPage = () => {
-  const { width = 0 } = useWindowSize();
-  const { isLoadingAuthUser, errorAuthMessage, errorAuthStatus, userRequest } = useAppSelector(getUserInfo);
+  const { errorAuthMessage, errorAuthStatus, userRequest } = useAppSelector(getUserInfo);
   const dispatch = useAppDispatch();
 
   return errorAuthMessage && errorAuthStatus !== 400 ? (
@@ -23,8 +20,6 @@ export const AuthPage = () => {
     />
   ) : (
     <AuthLayout title='Вход в личный кабинет'>
-      {isLoadingAuthUser &&
-        (width < Breackpoint.SM ? <Loader size={42} /> : width < Breackpoint.MD ? <Loader size={64} /> : <Loader />)}
       <AuthForm />
     </AuthLayout>
   );

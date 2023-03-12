@@ -3,7 +3,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import bookDetailsReducer from './features/book-details-slice';
 import booksReducer from './features/books-slice';
 import categoriesReducer from './features/categories-slice';
-import RegistrationUserReducer from './features/registration-user-slice';
+import forgotPasswordReducer from './features/forgot-password-slice';
+import registrationUserReducer from './features/registration-user-slice';
 import userReducer from './features/user-slice';
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
     categories: categoriesReducer,
     bookDetails: bookDetailsReducer,
     user: userReducer,
-    RegistrationUser: RegistrationUserReducer,
+    RegistrationUser: registrationUserReducer,
+    ForgotPassword: forgotPasswordReducer,
   },
 });
 

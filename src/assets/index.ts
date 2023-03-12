@@ -11,6 +11,7 @@ import { ReactComponent as CrossMarkIcon } from './icons/cross-mark-icon.svg';
 import { ReactComponent as FacebookIcon } from './icons/facebook-icon.svg';
 import { ReactComponent as FilterIconDown } from './icons/filter-icon-down.svg';
 import { ReactComponent as FilterIconUp } from './icons/filter-icon-up.svg';
+import { ReactComponent as ForgotPassArrowIcon } from './icons/forgot-pass-arrow-icon.svg';
 import { ReactComponent as InstagramIcon } from './icons/instagram-icon.svg';
 import { ReactComponent as LinkedinIcon } from './icons/linkedin-icon.svg';
 import { ReactComponent as LogoIcon } from './icons/logo.svg';
@@ -54,4 +55,5 @@ export {
   OkPasswordIcon,
   PasswordOpenIcon,
   PasswordCloseIcon,
+  ForgotPassArrowIcon,
 };
