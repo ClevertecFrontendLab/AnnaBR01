@@ -130,6 +130,11 @@ export type SendEmailFormValues = {
   email: string;
 };
 
+export type ResetPasswordFormValues = {
+  password: string;
+  passwordConfirmation: string;
+};
+
 export interface IRegistrationUsrerRequest {
   email: string;
   username: string;
@@ -181,4 +186,27 @@ export interface IForgotPasswordRequest {
 
 export interface IForgotPasswordResponse {
   ok: string;
+}
+
+export interface IResetPasswordRequest {
+  password: string;
+  passwordConfirmation: string;
+  code: string;
+}
+
+export interface IResetPasswordResponse {
+  jwt: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+  };
 }

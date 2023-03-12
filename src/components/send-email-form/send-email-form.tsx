@@ -3,17 +3,17 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { AuthArrowIcon } from '../../assets';
 import { ROUTE } from '../../routes/routes';
+import { fetchSendEmail } from '../../store/features/forgot-password-slice';
 import { fetchAuthUser, putUser } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getForgotPasswordInfo } from '../../store/selectors/forgot-password-selector';
 import { getUserInfo } from '../../store/selectors/user-selector';
 import { AuthFormValues, SendEmailFormValues } from '../../types/types';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
-import { ButtonAuth, Message } from '..';
+import { ButtonAuth } from '..';
 
-import { ForgotError, InputWrapper, StyledSendEmailForm, Text, TextLink, TextWrapper } from './styles';
-import { fetchSendEmail } from '../../store/features/forgot-password-slice';
-import { getForgotPasswordInfo } from '../../store/selectors/forgot-password-selector';
+import { ForgotError, InputWrapper, MessageForgot, StyledSendEmailForm, Text, TextLink, TextWrapper } from './styles';
 
 const rules = {
   email: {
@@ -86,14 +86,14 @@ export const SendEmailForm = () => {
           {errors.email ? (
             <InputError>{errors.email.message}</InputError>
           ) : (
-            <Message>
+            <MessageForgot>
               {errorSendEmailMessage && (
-                <ForgotError>
-                  {errorSendEmailMessage} <br />
+                <ForgotError data-test-id='hint'>
+                  error <br />
                 </ForgotError>
               )}
               На это email будет отправлено письмо с инструкциями по восстановлению пароля
-            </Message>
+            </MessageForgot>
           )}
         </InputWrapper>
 

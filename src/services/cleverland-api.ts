@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 import {
   IAuthUsrerRequest,
@@ -7,6 +7,7 @@ import {
   ICategory,
   IForgotPasswordRequest,
   IRegistrationUsrerRequest,
+  IResetPasswordRequest,
 } from '../types/types';
 
 enum Endpoint {
@@ -16,6 +17,7 @@ enum Endpoint {
   REGISTRATION = 'auth/local/register',
   AUTH = 'auth/local',
   FORGOT_PASSWORD = 'auth/forgot-password',
+  RESET_PASSWORD = 'auth/reset-password',
 }
 
 class CleverlandAPI {
@@ -70,13 +72,12 @@ class CleverlandAPI {
 
     return data;
   }
+
+  public async resetPassword(body: IResetPasswordRequest) {
+    const { data } = await this.API.post(Endpoint.RESET_PASSWORD, body);
+
+    return data;
+  }
 }
 
 export const cleverlandAPI = new CleverlandAPI();
-
-// axios.interceptors.request.use((config) => {
-//   // eslint-disable-next-line no-param-reassign
-//   if (localStorage.getItem('token')) config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-
-//   return config;
-// });

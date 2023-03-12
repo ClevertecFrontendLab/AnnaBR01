@@ -1,19 +1,18 @@
-import React from 'react';
+/* eslint-disable no-negated-condition */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
-import { AuthArrowIcon } from '../../assets';
-import { ROUTE } from '../../routes/routes';
-import { fetchAuthUser, putUser } from '../../store/features/user-slice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getUserInfo } from '../../store/selectors/user-selector';
-import { AuthFormValues, SendEmailFormValues } from '../../types/types';
+import { fetchResetPassword, putDataRequestReset } from '../../store/features/forgot-password-slice';
+import { useAppDispatch } from '../../store/hooks';
+import { ResetPasswordFormValues } from '../../types/types';
+import { getCode } from '../../utils/get-code';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
-import { ButtonAuth, Message } from '..';
+import { ButtonAuth, HelpError, Message } from '..';
 
-import { ForgotError, InputWrapper, StyledSendEmailForm, Text, TextLink, TextWrapper } from './styles';
-import { fetchSendEmail } from '../../store/features/forgot-password-slice';
-import { getForgotPasswordInfo } from '../../store/selectors/forgot-password-selector';
+import { InputWrapper, StyledResetPasswordForm, Text } from './styles';
 
 const rules = {
   password: {
@@ -30,7 +29,6 @@ const rules = {
 
 export const ResetPasswordForm = () => {
   const dispatch = useAppDispatch();
-  const { errorSendEmailMessage } = useAppSelector(getForgotPasswordInfo);
 
   const {
     control,
@@ -39,77 +37,159 @@ export const ResetPasswordForm = () => {
     watch,
     setError,
     formState: { errors },
-  } = useForm<SendEmailFormValues>({
-    defaultValues: { email: '' },
+  } = useForm<ResetPasswordFormValues>({
+    defaultValues: { password: '', passwordConfirmation: '' },
     mode: 'onBlur',
   });
 
-  const watchEmail = watch('email');
-  const checkEmail = () => {
-    const ruleLetters = /([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$)/;
+  const watchPassword = watch('password');
+  const watchPasswordConfirmation = watch('passwordConfirmation');
+  const checkErrorsPassword = () => {
+    const ruleNumber = /(?=.*\d)/;
+    const ruleLetter = /(?=.*[A-Z])/;
+    const ruleLength = /.{8,}/;
 
-    if (!watchEmail) {
-      setError('email', { type: 'required', message: 'Поле не может быть пустым' });
-    } else if (!ruleLetters.test(String(watchEmail)) && watchEmail !== '') {
-      setError('email', { type: 'email', message: 'Введите корректный e-mail' });
-    } else clearErrors('email');
+    clearErrors('password');
+
+    if (!ruleNumber.test(String(watchPassword).toLowerCase()) && watchPassword !== '') {
+      setError('password', { types: { errorRuleNumber: 'error' } });
+    }
+    if (!ruleLetter.test(String(watchPassword)) && watchPassword !== '') {
+      setError('password', { types: { errorRuleLetter: 'error' } });
+    }
+    if (!ruleLength.test(String(watchPassword).toLowerCase()) && watchPassword !== '') {
+      setError('password', { types: { errorRuleLength: 'error' } });
+    }
+    if (
+      !ruleNumber.test(String(watchPassword).toLowerCase()) &&
+      !ruleLetter.test(String(watchPassword)) &&
+      watchPassword !== ''
+    ) {
+      setError('password', { types: { errorRuleNumber: 'error', errorRuleLetter: 'error' } });
+    }
+    if (
+      !ruleNumber.test(String(watchPassword).toLowerCase()) &&
+      !ruleLength.test(String(watchPassword).toLowerCase()) &&
+      watchPassword !== ''
+    ) {
+      setError('password', { types: { errorRuleNumber: 'error', errorRuleLength: 'error' } });
+    }
+    if (
+      !ruleLetter.test(String(watchPassword)) &&
+      !ruleLength.test(String(watchPassword).toLowerCase()) &&
+      watchPassword !== ''
+    ) {
+      setError('password', { types: { errorRuleLetter: 'error', errorRuleLength: 'error' } });
+    }
+    if (
+      !ruleNumber.test(String(watchPassword).toLowerCase()) &&
+      !ruleLetter.test(String(watchPassword)) &&
+      !ruleLength.test(String(watchPassword).toLowerCase()) &&
+      watchPassword !== ''
+    ) {
+      setError('password', { types: { errorRuleNumber: 'error', errorRuleLetter: 'error', errorRuleLength: 'error' } });
+    }
   };
 
-  const onSubmit: SubmitHandler<SendEmailFormValues> = (userInfo) => {
-    dispatch(fetchSendEmail(userInfo));
+  useEffect(() => {
+    checkErrorsPassword();
+  }, [watchPassword]);
+
+  const { search } = useLocation();
+  const onSubmit: SubmitHandler<ResetPasswordFormValues> = (userInfo) => {
+    const requestValue = { ...userInfo, code: getCode(search) };
+
+    dispatch(putDataRequestReset(requestValue));
+    dispatch(fetchResetPassword(requestValue));
   };
 
   return (
     <React.Fragment>
-      <StyledSendEmailForm action='#' onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
+      <StyledResetPasswordForm action='#' onSubmit={handleSubmit(onSubmit)} data-test-id='reset-password-form'>
         <InputWrapper>
           <Controller
             control={control}
-            name='email'
-            rules={rules.email}
-            render={({ field: { onChange, value } }) => (
+            name='password'
+            rules={rules.password}
+            render={({ field: { onChange, value, onBlur } }) => (
               <InputAuth
-                name='email'
+                name='password'
                 onChange={onChange}
                 value={value}
-                type='email'
-                placeholder='Email'
-                errorInput={errors.email || errorSendEmailMessage ? true : false}
+                type='password'
+                placeholder='Новый пароль'
+                errorInput={errors.password ? true : false}
                 onFocus={() => {
-                  clearErrors('email');
+                  checkErrorsPassword();
                 }}
-                onBlurEvent={() => {
-                  checkEmail();
+                onBlurEvent={onBlur}
+                activeInput={!!value}
+                okPassword={!errors.password && value ? true : false}
+              />
+            )}
+          />
+
+          {!errors.password ? (
+            <Message>Пароль не менее 8 символов, с заглавной буквой и цифрой</Message>
+          ) : errors.password?.type === 'pattern' || errors.password?.type === 'required' ? (
+            <InputError>{errors.password.message}</InputError>
+          ) : (
+            <Message>
+              Пароль
+              <HelpError error={errors.password?.types?.errorRuleLength ? true : false}>
+                &nbsp;не менее 8 символов
+              </HelpError>
+              ,
+              <HelpError error={errors.password?.types?.errorRuleLetter ? true : false}>
+                &nbsp;с заглавной буквой
+              </HelpError>
+              &nbsp;и<HelpError error={errors.password?.types?.errorRuleNumber ? true : false}> цифрой</HelpError>
+            </Message>
+          )}
+        </InputWrapper>
+
+        <InputWrapper>
+          <Controller
+            control={control}
+            name='passwordConfirmation'
+            rules={rules.passwordConfirmation}
+            render={({ field: { onChange, value, onBlur } }) => (
+              <InputAuth
+                name='passwordConfirmation'
+                onChange={onChange}
+                value={value}
+                type='password'
+                placeholder='Повторите пароль'
+                errorInput={
+                  errors.passwordConfirmation ||
+                  (watchPasswordConfirmation !== watchPassword && watchPasswordConfirmation !== '')
+                    ? true
+                    : false
+                }
+                onFocus={() => {
+                  clearErrors('passwordConfirmation');
                 }}
+                onBlurEvent={onBlur}
                 activeInput={!!value}
               />
             )}
           />
 
-          {errors.email ? (
-            <InputError>{errors.email.message}</InputError>
-          ) : (
-            <Message>
-              {errorSendEmailMessage && (
-                <ForgotError>
-                  {errorSendEmailMessage} <br />
-                </ForgotError>
-              )}
-              На это email будет отправлено письмо с инструкциями по восстановлению пароля
-            </Message>
+          {errors.passwordConfirmation && <InputError>{errors.passwordConfirmation.message}</InputError>}
+          {watchPasswordConfirmation !== watchPassword && watchPasswordConfirmation !== '' && (
+            <InputError>Пароли не совпадают</InputError>
           )}
         </InputWrapper>
 
-        <ButtonAuth text='восстановить' disabled={errors.email ? true : false} />
-      </StyledSendEmailForm>
+        <ButtonAuth
+          text='сохранить изменения'
+          disabled={
+            errors.password || errors.passwordConfirmation || watchPasswordConfirmation !== watchPassword ? true : false
+          }
+        />
+      </StyledResetPasswordForm>
 
-      <TextWrapper>
-        Нет учётной записи?
-        <Text>
-          <TextLink to={ROUTE.REGISTRATION}> Регистрация</TextLink>
-          <AuthArrowIcon />
-        </Text>
-      </TextWrapper>
+      <Text>После сохранения войдите в библиотеку, используя новый пароль</Text>
     </React.Fragment>
   );
 };

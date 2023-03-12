@@ -26,6 +26,10 @@ const StyledButtonAuth = styled.button.attrs<IProps>((props) => ({
   text-transform: uppercase;
   color: #ffffff;
 
+  &:disabled {
+    background: #ebebeb;
+  }
+
   ${Media.SM} {
     padding: 11px;
     margin-top: ${({ marginTopSm }) => marginTopSm};
