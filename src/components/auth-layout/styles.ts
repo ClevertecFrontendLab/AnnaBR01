@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import { ContainerFlexColumn } from '../../ui/containers';
 import { Media } from '../../ui/media';
 
-interface IProps {
+interface IPropsAuth {
   gapLg: number;
   gapSm: number;
 }
 
-const StyledAuthLayout = styled(ContainerFlexColumn).attrs<IProps>((props) => ({
+interface IPropsForm {
+  paddingTop: number;
+}
+
+const StyledAuthLayout = styled(ContainerFlexColumn).attrs<IPropsAuth>((props) => ({
   gapLg: `${props.gapLg}px`,
   gapSm: `${props.gapSm}px`,
-}))<IProps>`
+}))<IPropsAuth>`
   height: 100vh;
   align-items: center;
   grid-gap: ${({ gapLg }) => gapLg};
@@ -38,16 +42,22 @@ const Logo = styled.p`
   }
 `;
 
-const StyledForm = styled.div`
+const StyledForm = styled.div.attrs<IPropsForm>((props) => ({
+  paddingTop: `${props.paddingTop}px`,
+}))<IPropsForm>`
+  position: relative;
   max-width: 528px;
   width: 100%;
-  padding: 48px 56px;
+  padding-top: ${({ paddingTop }) => paddingTop};
+  padding-bottom: 48px;
+  padding-inline: 56px;
   background: #ffffff;
   border-radius: 16px;
 
   ${Media.SM} {
     max-width: 100%;
-    padding: 24px 16px;
+    padding-bottom: 24px;
+    padding-inline: 16px;
   }
 `;
 

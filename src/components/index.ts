@@ -33,6 +33,7 @@ import { Separator } from './separator/separator';
 import { SliderDesktop } from './slider-desktop/slider-desktop';
 import { SliderTablet } from './slider-tablet/slider-tablet';
 import { Stars } from './stars/stars';
+import { StatusBlock } from './status-block/status-block';
 import { VerticalBookCard } from './vertical-book-card/vertical-book-card';
 
 export {
@@ -72,4 +73,5 @@ export {
   InputAuthPhone,
   RegistrationForm,
   AuthForm,
+  StatusBlock,
 };

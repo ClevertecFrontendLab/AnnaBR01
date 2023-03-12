@@ -9,6 +9,7 @@ import {
   changeDisplayedBooks,
   changeDisplayedBooksByCategory,
 } from '../../store/features/books-slice';
+import { logout } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
@@ -24,7 +25,6 @@ import {
   Wrapper,
   WrapperChevron,
 } from './styles';
-import { logout } from '../../store/features/user-slice';
 
 interface IProps {
   menuOpen: boolean;

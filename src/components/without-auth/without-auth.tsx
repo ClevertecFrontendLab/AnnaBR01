@@ -1,3 +1,4 @@
+/* eslint-disable no-negated-condition */
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { ROUTE } from '../../routes/routes';

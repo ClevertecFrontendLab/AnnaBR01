@@ -1,3 +1,4 @@
+import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { AuthArrowIcon } from '../../assets';
@@ -8,8 +9,7 @@ import { getUserInfo } from '../../store/selectors/user-selector';
 import { AuthFormValues } from '../../types/types';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
-import { StatusBlock } from '../status-block/status-block';
-import { AuthLayout, ButtonAuth } from '..';
+import { ButtonAuth } from '..';
 
 import {
   Auth,
@@ -33,7 +33,7 @@ const rules = {
 
 export const AuthForm = () => {
   const dispatch = useAppDispatch();
-  const { errorAuthMessage, errorAuthStatus, userRequest } = useAppSelector(getUserInfo);
+  const { errorAuthStatus } = useAppSelector(getUserInfo);
 
   const {
     control,
@@ -45,30 +45,13 @@ export const AuthForm = () => {
     mode: 'onBlur',
   });
 
-  const request = (user: AuthFormValues) => {
-    dispatch(fetchAuthUser(user))
-      .unwrap()
-      .then(() => {});
-  };
-
   const onSubmit: SubmitHandler<AuthFormValues> = (userInfo) => {
     dispatch(putUser(userInfo));
-    request(userInfo);
+    dispatch(fetchAuthUser(userInfo));
   };
 
-  return errorAuthMessage && errorAuthStatus !== 400 ? (
-    <StatusBlock
-      gapLg={159}
-      gapSm={125}
-      title='Вход не выполнен'
-      message='Что-то пошло не так. Попробуйте ещё раз'
-      buttonText='повторить'
-      onClick={() => {
-        request(userRequest);
-      }}
-    />
-  ) : (
-    <AuthLayout title='Вход в личный кабинет'>
+  return (
+    <React.Fragment>
       <Auth action='#' onSubmit={handleSubmit(onSubmit)} data-test-id='auth-form'>
         <InputWrapper>
           <Controller
@@ -121,7 +104,7 @@ export const AuthForm = () => {
 
           {errorAuthStatus === 400 ? (
             <ErrorAuthStatusWrapper>
-              <ErrorAuthStatus>Неверный логин или пароль!</ErrorAuthStatus>
+              <ErrorAuthStatus data-test-id='hint'>Неверный логин или пароль!</ErrorAuthStatus>
               <TextLink to={ROUTE.FORGOT_PASS}>Восстановить</TextLink>
             </ErrorAuthStatusWrapper>
           ) : (
@@ -139,6 +122,6 @@ export const AuthForm = () => {
           <AuthArrowIcon />
         </Text>
       </TextWrapper>
-    </AuthLayout>
+    </React.Fragment>
   );
 };
