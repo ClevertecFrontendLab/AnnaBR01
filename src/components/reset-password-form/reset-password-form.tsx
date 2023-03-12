@@ -7,25 +7,13 @@ import { useLocation } from 'react-router-dom';
 import { fetchResetPassword, putDataRequestReset } from '../../store/features/forgot-password-slice';
 import { useAppDispatch } from '../../store/hooks';
 import { ResetPasswordFormValues } from '../../types/types';
+import { rules } from '../../utils/constants';
 import { getCode } from '../../utils/get-code';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
 import { ButtonAuth, HelpError, Message } from '..';
 
 import { InputWrapper, StyledResetPasswordForm, Text } from './styles';
-
-const rules = {
-  password: {
-    required: 'Поле не может быть пустым',
-    pattern: {
-      value: /(?=.*\d)(?=.*[A-Z]).{8,}/,
-      message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-    },
-  },
-  passwordConfirmation: {
-    required: 'Поле не может быть пустым',
-  },
-};
 
 export const ResetPasswordForm = () => {
   const dispatch = useAppDispatch();

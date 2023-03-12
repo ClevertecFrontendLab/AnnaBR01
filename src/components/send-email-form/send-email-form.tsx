@@ -4,26 +4,15 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { AuthArrowIcon } from '../../assets';
 import { ROUTE } from '../../routes/routes';
 import { fetchSendEmail } from '../../store/features/forgot-password-slice';
-import { fetchAuthUser, putUser } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getForgotPasswordInfo } from '../../store/selectors/forgot-password-selector';
-import { getUserInfo } from '../../store/selectors/user-selector';
-import { AuthFormValues, SendEmailFormValues } from '../../types/types';
+import { SendEmailFormValues } from '../../types/types';
+import { rules } from '../../utils/constants';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
 import { ButtonAuth } from '..';
 
 import { ForgotError, InputWrapper, MessageForgot, StyledSendEmailForm, Text, TextLink, TextWrapper } from './styles';
-
-const rules = {
-  email: {
-    required: 'Поле не может быть пустым',
-    pattern: {
-      value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
-      message: 'Введите корректный e-mail',
-    },
-  },
-};
 
 export const SendEmailForm = () => {
   const dispatch = useAppDispatch();

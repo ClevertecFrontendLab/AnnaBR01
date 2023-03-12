@@ -7,6 +7,7 @@ import { fetchAuthUser, putUser } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getUserInfo } from '../../store/selectors/user-selector';
 import { AuthFormValues } from '../../types/types';
+import { rules } from '../../utils/constants';
 import { InputAuth } from '../input-auth/input-auth';
 import { InputError } from '../input-error/input-error';
 import { ButtonAuth } from '..';
@@ -21,15 +22,6 @@ import {
   TextLink,
   TextWrapper,
 } from './styles';
-
-const rules = {
-  identifier: {
-    required: 'Поле не может быть пустым',
-  },
-  password: {
-    required: 'Поле не может быть пустым',
-  },
-};
 
 export const AuthForm = () => {
   const dispatch = useAppDispatch();
@@ -82,7 +74,7 @@ export const AuthForm = () => {
           <Controller
             control={control}
             name='password'
-            rules={rules.password}
+            rules={rules.passwordAuth}
             render={({ field: { onChange, value, onBlur } }) => (
               <InputAuth
                 name='password'
