@@ -6,8 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
 import { Breackpoint } from '../../ui/media';
-import { Loader } from '../loader/loader';
-import { BooksContent, Error, Navigation } from '..';
+import { BooksContent, Error, Loader, Navigation } from '..';
 
 import { StyledBooklist } from './styles';
 

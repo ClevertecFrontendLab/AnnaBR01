@@ -5,14 +5,18 @@ import { BurgerIcon, CrossMarkIcon, LogoIcon, LogoNameIcon } from '../../assets'
 import avatar from '../../assets/images/avatar.png';
 import { useOnClickOutside } from '../../hooks/use-on-click-outside';
 import { ROUTE } from '../../routes/routes';
-import { BurgerMenu } from '..';
+import { logout } from '../../store/features/user-slice';
+import { useAppDispatch } from '../../store/hooks';
+import { BurgerMenu, CustomAsidelink } from '..';
 
-import { Box, BurgerBox, Container, LogoContainer, StyledHeader, Text, Title, UserInfo } from './styles';
+import { Box, BurgerBox, Container, LogoContainer, StyledHeader, Text, Title, UserBurger, UserInfo } from './styles';
 
 export const Header = () => {
   const [isMenuOpen, toggleMenu] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [isOpenUserBurger, setIsOpenUserBurger] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
 
   useOnClickOutside(ref, () => toggleMenu(false));
 
@@ -43,7 +47,11 @@ export const Header = () => {
       </BurgerBox>
       <Container>
         <Title>Бибилиотека</Title>
-        <UserInfo>
+        <UserInfo
+          onClick={() => {
+            setIsOpenUserBurger(!isOpenUserBurger);
+          }}
+        >
           <Text>Привет, Анна!</Text>
           <img src={avatar} alt='avatar' />
         </UserInfo>
@@ -60,6 +68,23 @@ export const Header = () => {
           />
         )}
       </div>
+      {isOpenUserBurger && (
+        <UserBurger>
+          <CustomAsidelink to='account' type='primary'>
+            Профиль
+          </CustomAsidelink>
+
+          <CustomAsidelink
+            to={ROUTE.AUTH}
+            type='primary'
+            onClick={() => {
+              dispatch(logout());
+            }}
+          >
+            <p data-test-id='exit-button'> Выход</p>
+          </CustomAsidelink>
+        </UserBurger>
+      )}
     </StyledHeader>
   );
 };

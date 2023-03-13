@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
-import { CustomAsidelink } from '../custom-aside-link/custom-aside-link';
+import { CustomAsidelink } from '..';
 
 import { Amount, CategoryBox, ChevronButton, Text, Wrapper, WrapperChevron } from './styles';
 

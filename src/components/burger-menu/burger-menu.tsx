@@ -9,10 +9,11 @@ import {
   changeDisplayedBooks,
   changeDisplayedBooksByCategory,
 } from '../../store/features/books-slice';
+import { logout } from '../../store/features/user-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getBooks } from '../../store/selectors/books-selectors';
 import { getCategories } from '../../store/selectors/categories-selectors';
-import { CustomAsidelink } from '../custom-aside-link/custom-aside-link';
+import { CustomAsidelink } from '..';
 
 import {
   Amount,
@@ -112,8 +113,14 @@ export const BurgerMenu = ({ toggleMenuMode, handleCategories, closeCategories, 
         <CustomAsidelink to='account' type='primary' onClick={closeBurgerMenu}>
           Профиль
         </CustomAsidelink>
-        <CustomAsidelink to='example' type='primary' onClick={closeBurgerMenu}>
-          Выход
+        <CustomAsidelink
+          to={ROUTE.AUTH}
+          type='primary'
+          onClick={() => {
+            dispatch(logout());
+          }}
+        >
+          <p data-test-id='exit-button'> Выход</p>
         </CustomAsidelink>
       </Wrapper>
     </StyledBurgerMenu>
